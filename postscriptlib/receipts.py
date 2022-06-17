@@ -1,6 +1,3 @@
-from hex_grid import ATC_HEIGHT_PTS, ATC_WIDTH_PTS
-
-
 class Receipt:
     # PostScript uses 72 points per inch
     PPI = 72
@@ -9,14 +6,14 @@ class Receipt:
     # are 2.5x3.5 inches.
     ATC_WIDTH_INCHES = 2.5
     ATC_HEIGHT_INCHES = 3.5
-    ATC_WIDTH_PNTS = ATC_WIDTH_INCHES * PPI
-    ATC_HEIGHT_PNTS = ATC_HEIGHT_INCHES * PPI
+    ATC_WIDTH_POINTS = ATC_WIDTH_INCHES * PPI
+    ATC_HEIGHT_POINTS = ATC_HEIGHT_INCHES * PPI
 
     def __init__(self, num_cards, receipt_args):
         self.num_cards = num_cards
         self.args = receipt_args
-        self.width = ATC_WIDTH_PTS
-        self.height = num_cards * ATC_HEIGHT_PTS
+        self.width = self.ATC_WIDTH_POINTS
+        self.height = num_cards * self.ATC_HEIGHT_POINTS
         self.postscript_lines = []
         self.add_preamble()
     

@@ -12,6 +12,12 @@ class Path:
         self.lines.append(f"0 {h:.4f} rlineto")
         self.lines.append(f"{-w:.4f} 0 rlineto")
         self.lines.append(f"0 {-h:.4f} rlineto")
+    
+    def rpolygon(self, origin, displacements):
+        (ox, oy) = origin
+        self.lines.append(f"{ox:.4f} {oy:.4f} moveto")
+        for (x, y) in displacements:
+            self.lines.append(f"{x:.4f} {y:.4f} rlineto")
 
     def to_postscript(self):
         return ["newpath"] + self.lines
