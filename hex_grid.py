@@ -34,7 +34,6 @@ def hexagon(f, x, y):
     for (bx, by) in BASIS:
         f.write(f"{bx:.4f} {by:.4f} rlineto\n")
 
-
 # how many quarter inch squares fit on the
 # art trading card
 WIDTH_SQUARES = 10
