@@ -24,3 +24,10 @@ Next Steps:
 * Make a simple sketch-like interface
 * Try other patterns
 * Make the grids extendable to long receipts
+
+## 2022-06-17 Hitomezashi Stitching Patterns
+
+Today I implemented hitemozashi patterns, inspired by
+[this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also
+started making a sketchbook-like interface for these receipts. I still need
+to refactor `hex_grid` and `fm_ring` though.
