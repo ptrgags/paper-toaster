@@ -31,6 +31,9 @@ class Receipt:
 
     def stroke(self):
         self.postscript_lines.append("stroke")
+
+    def fill(self):
+        self.postscript_lines.append("fill")
     
     def add_lines(self, lines):
         self.postscript_lines.extend(lines)
