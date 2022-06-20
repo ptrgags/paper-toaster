@@ -34,6 +34,19 @@ class Receipt:
     
     def add_lines(self, lines):
         self.postscript_lines.extend(lines)
+    
+    def set_font(self, font_name, size_points):
+        self.postscript_lines.extend([
+            f"/{font_name} findfont",
+            f"{size_points} scalefont",
+            "setfont"
+        ])
+
+    def draw_text(self, x, y, text):
+        self.postscript_lines.extend([
+            f"{x} {y} moveto",
+            f"({text}) show"
+        ])
 
     def setup(self):
         pass
