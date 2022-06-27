@@ -31,3 +31,19 @@ Today I implemented hitemozashi patterns, inspired by
 [this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also
 started making a sketchbook-like interface for these receipts. I still need
 to refactor `hex_grid` and `fm_ring` though.
+
+## 2022-06-27 Dancing Turtles
+
+Today I tried out the math from 
+[This 2017 Bridges paper](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)
+to make turtle graphics "dances" with integer sequences and modular arithmetic.
+The paper only shows the math for the sequence of natural numbers, but I'm
+also trying other sequences. I'm also trying odd-even coloring (nice that
+PostScript comes with a built-in `eofill` command!)
+
+Next Steps:
+
+* Add a parameter to control the angle divisions (default 360)
+* Determine when to stop... the paper gives one formula, but can it be
+    generalized for other sequences?
+* Experiment with more sequences
