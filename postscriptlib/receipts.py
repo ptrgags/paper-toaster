@@ -32,6 +32,9 @@ class Receipt:
     def fill(self):
         self.postscript_lines.append("fill")
     
+    def even_odd_fill(self):
+        self.postscript_lines.append("eofill")
+    
     def add_lines(self, lines):
         self.postscript_lines.extend(lines)
 
