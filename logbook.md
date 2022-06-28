@@ -83,3 +83,15 @@ fibonacci 300 100 --divisions 12
 One thing I notice is that sometimes the output looks non-uniformly scaled.
 I think this is because the remapping to the square output doesn't account
 for the aspect ratio... I should consider fixing that in the future.
+
+Another thing, to concatenate postscript/PDF files to a single PDF, the
+command is:
+
+```bash
+gswin64 -o output.pdf -sDEVICE=pdfwrite input0.ps input1.ps
+```
+
+Next Steps:
+
+* I think I want to move on to another idea with turtle graphics concerning
+    generalized Hilbert curves, but I'll do that on another branch.
