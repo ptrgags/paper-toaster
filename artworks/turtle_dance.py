@@ -80,6 +80,12 @@ class Receipt(receipts.Receipt):
         parser.add_argument("a", type=int, help="first modulus")
         parser.add_argument("b", type=int, help="second modulus")
         parser.add_argument(
+            "--divisions",
+            type=int,
+            default=360,
+            help="Angles used are 2 pi / divisions"
+        )
+        parser.add_argument(
             "--fill",
             action="store_true",
             help="even/odd fill instead of stroke the path"
@@ -105,15 +111,20 @@ class Receipt(receipts.Receipt):
             box_width
         )
 
-        self.turtle = PSTurtle(360)
-    
-    def draw(self):
-        # TODO: See the paper about how to choose this.
-        N = 360 * 8
-        for i in range(N):
+        self.turtle = PSTurtle(args.divisions)
+
+    def turtle_dance(self):
+        for i in itertools.count(1):
             self.turtle.forward(1.0)
             delta_heading = next(self.sequence)
             self.turtle.turn(delta_heading)
+
+            if self.turtle.is_finished:
+                print(f"Finished after {i} steps")
+                break
+    
+    def draw(self):
+        self.turtle_dance()
         
         dance = self.turtle.make_path(self.drawing_bounds)
         self.add_path(dance)

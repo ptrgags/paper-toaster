@@ -19,6 +19,7 @@ class PSTurtle:
         self.bounds = Rectangle(0, 0, 0, 0)
         self.position = Vec2(0, 0)
         self.positions = [self.position]
+        self.turn_count = 0
     
     @property
     def direction_vec(self):
@@ -37,8 +38,17 @@ class PSTurtle:
         """
         Turn 
         """
+        self.turn_count += 1
         self.heading += delta_heading
         self.heading %= self.angle_divisions
+
+    @property
+    def is_finished(self):
+        """
+        Check if we're close to the origin and facing to the right
+        """
+        origin = Vec2(0, 0)
+        return self.heading == 0 and abs(self.position - origin) < 0.001
 
     def make_path(self, drawing_bounds):
         """

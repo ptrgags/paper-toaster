@@ -47,3 +47,39 @@ Next Steps:
 * Determine when to stop... the paper gives one formula, but can it be
     generalized for other sequences?
 * Experiment with more sequences
+
+
+## 2022-06-28 Exploring Turtle Dances
+
+Today I added the angle divisions and added a stopping condition. Not perfect,
+but most of the time it gives decent results
+
+Here are some 
+
+```text
+natural 45 25 --fill
+natural 80 65
+natural 70 80
+natural 35 710
+natural 234 32
+natural 237 30
+square 100 200
+square 90 100 --fill
+square 90 270
+square 360 46 --divisions 12
+triangle 350 20
+triangle 25 40
+triangle 100 200
+triangle 350 500
+triangle 40 20 --fill
+triangle 468 32 --divisions 12 --fill
+fibonacci 20 30
+fibonacci 60 30 --fill
+fibonacci 500 50
+fibonacci 100 200 --divisions 12
+fibonacci 300 100 --divisions 12
+```
+
+One thing I notice is that sometimes the output looks non-uniformly scaled.
+I think this is because the remapping to the square output doesn't account
+for the aspect ratio... I should consider fixing that in the future.

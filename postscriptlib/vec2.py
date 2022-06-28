@@ -33,6 +33,11 @@ class Vec2:
         y = self.y / other.y
         return Vec2(x, y)
 
+    def __abs__(self):
+        x = self.x
+        y = self.y
+        return math.sqrt(x * x + y * y)
+
     @classmethod
     def direction_vec(cls, angle_radians):
         """
