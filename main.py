@@ -6,7 +6,8 @@ ARTWORK_LIST = [
     "hex_grid",
     "fm_ring",
     "hitomezashi",
-    "turtle_dance"
+    "turtle_dance",
+    "generalized_hilbert"
 ]
 
 if __name__ == "__main__":
