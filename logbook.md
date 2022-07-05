@@ -44,3 +44,6 @@ Next Steps:
 
 * Figure out a better way to handle the barcode given it is variable size.
     maybe landscape? Or compute the module size based on the output length?
+* Allow exporting a text file with the 0s and 1s of the barcode, might be
+    interesting to try making musical rhythms from the results (if so, would be
+    done in a different repo)

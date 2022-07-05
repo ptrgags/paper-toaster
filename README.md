@@ -35,3 +35,5 @@ Here is a list of artwork IDs and what they do:
 * `hex_grid` - prints a hexagonal grid pattern
 * `fm_ring` - prints a generative art using frequency modulation and parametric
     equations.
+* `barcode_code128 <text>` - Encodes text as a
+    [Code 128](https://en.wikipedia.org/wiki/Code_128) barcode.
