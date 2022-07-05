@@ -31,3 +31,16 @@ Today I implemented hitemozashi patterns, inspired by
 [this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also
 started making a sketchbook-like interface for these receipts. I still need
 to refactor `hex_grid` and `fm_ring` though.
+
+## 2022-07-03 Code 128 Barcodes
+
+Today I started learning about barcodes. There's many different types from
+UPC-A (used for labeling products for sale) to Code 128 (general-purpose
+alphanumeric codes), and others (EAN, QR, PDF 417, to name a few others). I
+started with Code 128 since it isn't too complicated of an encoding scheme
+and supports alphanumeric characters, not just numbers.
+
+Next Steps:
+
+* Figure out a better way to handle the barcode given it is variable size.
+    maybe landscape? Or compute the module size based on the output length?
