@@ -1,3 +1,4 @@
+import argparse
 import random
 
 from postscriptlib import receipts
@@ -11,13 +12,16 @@ SQUARE_SIZE = PPI / 32.0
 
 class Receipt(receipts.Receipt):
     def setup(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("rule", type=int, help="rule number from 0 to 255")
+        args = parser.parse_args(self.args)
+
         self.grid_width = int(self.width / SQUARE_SIZE)
         self.grid_height = int(self.height / SQUARE_SIZE)
 
         self.prev_row = [0] * self.grid_width
         self.current_row = [random.randint(0, 1) for _ in range(self.grid_width)]
-        #self.current_row[32] = 1
-        self.rule = 149
+        self.rule = args.rule
 
     def compute_row(self):
         self.prev_row, self.current_row = self.current_row, self.prev_row
