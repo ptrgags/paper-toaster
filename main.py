@@ -5,7 +5,8 @@ ARTWORK_LIST = [
     "grid",
     "hex_grid",
     "fm_ring",
-    "hitomezashi"
+    "hitomezashi",
+    "cellular_automaton"
 ]
 
 if __name__ == "__main__":
