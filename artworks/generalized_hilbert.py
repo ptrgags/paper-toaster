@@ -9,21 +9,66 @@ from postscriptlib.rectangle import Rectangle
 # Postscript points-per-inch
 PPI = receipts.Receipt.PPI
 
-RULES = {
-    "a": "aFLbFbFbLFaRFRaFaFaRFbFbLFaRFbL",
-    "b": "RaFLbFRaFaFLbFbFbLFLbFRaFaFaRFb",
+def swap_symbols(pattern, symbol_a, symbol_b, temp_symbol):
+    return (pattern
+        .replace(symbol_a, temp_symbol)
+        .replace(symbol_b, symbol_a)
+        .replace(temp_symbol, symbol_b)
+    )
 
-    # the spaces help with debugging
-    #"a": "aFaFaF LbFbFbFbLF aF LbFbLF aRF RaFaFaRF bFbF RaFaFaFaFaRF bFbFbFbL".replace(' ', ''),
-    #"b": "RaFaFaFa FLbFbFbFbFbL FaFa FLbFbFbL FLb FRaFaR Fb FRaFaFaFaR FbFbFb".replace(' ', ''),
-}
+def get_rule_b(rule_a):
+    """
+    Rule b is the backwards version of a. This involves:
+    1. reverse the string
+    2. swap a <-> b
+    3. swap L <-> R
 
-ITERS = 4
+    Note that F stays unchanged.
+    """
+    backwards = rule_a[::-1]
+    swapped = swap_symbols(backwards, 'a', 'b', '$')
+    return swap_symbols(swapped, 'L', 'R', '$')
+
+def make_rules(rule_a):
+    rule_a = rule_a.replace(' ', '')
+    return {
+        "a": rule_a,
+        "b": get_rule_b(rule_a)
+    }
+
+RULE_SPIRAL = "aFaFaF LbFbFbFbLF aF LbFbLF aRF RaFaFaRF bFbF RaFaFaFaFaRF bFbFbFbL"
+RULE_CUTOUT = "aFLbFbFbLFaRFRaFaFaRFbFbLFaRFbL"
+RULE_M = "LbF RaF aRF bLF LbF RaF aRF bL"
+RULE_PULSE = "LbF bF bF RaF aF aRF bF bF bLF a"
+RULE_UP_AND_DOWN = (
+    "LbF RaF aRF bF"
+    "bF  bLF LbF bF"
+    "bF  bF  RaF aRF"
+    "bF  bF  bLF LbF"
+    "Ra"
+)
+RULE_INTERLOCKING = (
+    "aF  aF  LbF bF  bF"
+    "bLF aF  aRF bF  bF"
+    "bF  RaF aF  LbF bF"
+    "bF  bF  RaF aRF bF" 
+    "bF  bF  bF  bF  bF"
+    "bF  bF  bF  bF  bLF"
+    "aF  LbF bF  bLF aRF"
+    "RaF aF  LbF bF  bF"
+    "bF  RaF aRF bF  bF"
+    "bF  bF  bF  RaF LbF"
+    "bLF a"
+)
+
+DIVISIONS = 4
+RULE = RULE_SPIRAL
+ITERS = 2
 
 class Receipt(receipts.Receipt):
     def setup(self):
-        self.turtle = PSTurtle(angle_divisions=4)
-        self.l_system = LSystem(RULES, "a")
+        self.turtle = PSTurtle(angle_divisions=DIVISIONS)
+        self.l_system = LSystem(make_rules(RULE), "a")
 
         # make a 2 inch bounding box in which we will draw
         # the pattern
