@@ -7,7 +7,7 @@ class Grid(receipts.Receipt):
     def add_arguments(cls, subparser):
         subparser.add_argument(
             '-s',
-            '--square_size',
+            '--square-size',
             type=float,
             default=0.25,
             help="Size of a grid square in inches. Defaults to 1/4 inch"
@@ -18,7 +18,6 @@ class Grid(receipts.Receipt):
         self.grid_width = int(self.width / square_size)
         self.grid_height = int(self.height / square_size)
         self.square_size = square_size
-        print(self.grid_width, self.grid_height, self.square_size)
     
     def draw(self):
         grid = path.Path()
