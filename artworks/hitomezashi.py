@@ -15,7 +15,9 @@ def bin_or_dec(s):
 def flip_bit(b):
     return (~b) & 1
 
-class Receipt(receipts.Receipt):
+class Hitomezashi(receipts.Receipt):
+    ARTWORK_ID = 'hitomezashi'
+
     def setup(self):
         parser = argparse.ArgumentParser()
         parser.add_argument(

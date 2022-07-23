@@ -33,7 +33,9 @@ X_END = 4
 Y_START = 0
 Y_END = 11
 
-class Receipt(receipts.Receipt):
+class HexGrid(receipts.Receipt):
+    ARTWORK_ID = 'hex_grid'
+
     def setup(self):
         # The grid vectors aren't aligned with the 
         # receipt so have to expand the grid quite a bit :/
