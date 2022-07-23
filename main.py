@@ -16,11 +16,6 @@ if __name__ == "__main__":
         action="store_true",
         help="If set, the pages will use landscape rather than portrait orientation"
     )
-    parser.add_argument(
-        "artwork_args",
-        nargs="*",
-        help="additional arguments if needed"
-    )
     subparsers = parser.add_subparsers(dest='artwork')
 
     # Each receipt will add a subparser, so the overall usage
