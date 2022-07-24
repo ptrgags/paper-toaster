@@ -49,3 +49,9 @@ Next steps:
 * Consider using context managers for paths and graphics states?
 * Add a way to define functions at the document level.
 * Some commands must be stroked immediately, how to handle these?
+
+## 2022-07-24 Iso Grid
+
+Today I made a script to render an isometric map given a grid of height
+values. It works best when the heights increase towards the top right corner
+of the grid, else things get occluded
