@@ -14,23 +14,33 @@ class Braids(receipts.Receipt):
             default=0.25,
             help="Size of a grid square in inches. Defaults to 1/4 inch"
         )
+        subparser.add_argument(
+            '-i',
+            '--invert-colors',
+            action="store_true",
+            help="If set, use an inverted color scheme"
+        )
 
     def setup(self):
         square_size = self.args.square_size * self.PPI
         self.grid_width = int(self.width / square_size)
         self.grid_height = int(self.height / square_size)
         self.square_size = square_size
+        self.invert_colors = self.args.invert_colors
     
     def draw(self):
         thin = 2.0 / self.square_size
         thick = 3 * thin
+
+        fg_color = 1 if self.invert_colors else 0
+        bg_color = 0 if self.invert_colors else 1
 
         self.add_lines([
             "/cross_under {",
             "  newpath",
             "  0 0 moveto",
             "  0 0.5 1 0.5 1 1 curveto",
-            "  0 setgray",
+            f"  {fg_color} setgray",
             f"  {thin} setlinewidth",
             "  stroke",
             "  newpath",
@@ -38,11 +48,11 @@ class Braids(receipts.Receipt):
             "  0 0.5 1 0.5 1 0 curveto",
             "  gsave",
             f"  {thick} setlinewidth",
-            "  1 setgray",
+            f"  {bg_color} setgray",
             "  stroke",
             "  grestore",
             f"  {thin} setlinewidth",
-            "  0 setgray",
+            f"  {fg_color} setgray",
             "  stroke",
             "} def",
 
@@ -50,7 +60,7 @@ class Braids(receipts.Receipt):
             "  newpath",
             "  0 1 moveto",
             "  0 0.5 1 0.5 1 0 curveto",
-            "  0 setgray",
+            f"  {fg_color} setgray",
             f"  {thin} setlinewidth",
             "  stroke",
             "  newpath",
@@ -58,11 +68,11 @@ class Braids(receipts.Receipt):
             "  0 0.5 1 0.5 1 1 curveto",
             "  gsave",
             f"  {thick} setlinewidth",
-            "  1 setgray",
+            f"  {bg_color} setgray",
             "  stroke",
             "  grestore",
             f"  {thin} setlinewidth",
-            "  0 setgray",
+            f"  {fg_color} setgray",
             "  stroke",
             "} def",
 
@@ -72,11 +82,15 @@ class Braids(receipts.Receipt):
             " 0 1 lineto",
             " 1 0 moveto",
             " 1 1 lineto",
-            " 0 setgray",
+            f" {fg_color} setgray",
             f"  {thin} setlinewidth",
             " stroke",
             "} def",
+        ])
 
+        self.add_lines([
+            f"{bg_color} setgray",
+            f"0 0 {self.width} {self.height} rectfill",
             f"{self.square_size} {self.square_size} scale",
         ])
 
