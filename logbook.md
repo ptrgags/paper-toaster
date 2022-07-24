@@ -31,3 +31,11 @@ Today I implemented hitemozashi patterns, inspired by
 [this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also
 started making a sketchbook-like interface for these receipts. I still need
 to refactor `hex_grid` and `fm_ring` though.
+
+## 2022-06-24 Braids
+
+Yesterday and today, I tried making a simple tiling of strings crossed into
+braids. It looks pretty cool, but there's more I could potentially do with it.
+For example, I could take a sorting algorithm, keep track of the swaps and
+generate a braid layout. Though I need to think through how to encode such
+steps here
