@@ -1,6 +1,4 @@
 import argparse
-import importlib
-from inspect import Attribute
 
 from artworks import ARTWORKS
 
