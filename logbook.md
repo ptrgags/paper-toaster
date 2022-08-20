@@ -42,3 +42,21 @@ Next Steps:
 
 * I have an idea for varying the hitomezashi patterns with variable widths
 * I want to make tilings of the plane for more interesting grids to print.
+
+## 2022-07-23 Start refactoring
+
+Today I started refactoring `postscriptlib`, adding the following changes:
+
+1. Added the `Vec2` class from a different branch
+2. Refactored how the argparse usage works. Now each artwork adds its own
+    subparser
+3. Added a `circle()` command to draw dots
+4. Refactored the existing artworks and added some more parameters as I went
+
+Next steps:
+
+* Refactor abstractions. A `Document` for global details and a `Page` for
+    things that can be repeated
+* Consider using context managers for paths and graphics states?
+* Add a way to define functions at the document level.
+* Some commands must be stroked immediately, how to handle these?
