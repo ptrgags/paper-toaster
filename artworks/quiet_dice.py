@@ -1,6 +1,7 @@
 import random
 
 from postscriptlib import receipts
+from postscriptlib.vec2 import Vec2
 
 # Postscript points-per-inch
 PPI = receipts.Receipt.PPI
@@ -66,8 +67,8 @@ class QuietDice(receipts.Receipt):
                 x = j * CHAR_WIDTH * (CHARS_PER_COLUMN + 1)
                 result = self.roll_dice()
                 result_str = f"{result:>{CHARS_PER_COLUMN}} "
-                self.draw_text(x, y, result_str)
+                self.draw_text(Vec2(x, y), result_str)
         
         self.set_font("Courier-Bold", TITLE_SIZE)
         title = f"{self.n}d{self.sides} + {self.modifier}"
-        self.draw_text(0, self.title_y, title)
+        self.draw_text(Vec2(0, self.title_y), title)

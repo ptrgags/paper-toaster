@@ -68,9 +68,9 @@ class Receipt:
             "setfont"
         ])
 
-    def draw_text(self, x, y, text):
+    def draw_text(self, position, text):
         self.postscript_lines.extend([
-            f"{x} {y} moveto",
+            f"{position.x} {position.y} moveto",
             f"({text}) show"
         ])
 
