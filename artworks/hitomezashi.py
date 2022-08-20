@@ -1,5 +1,3 @@
-import argparse
-
 from postscriptlib import receipts, path
 from postscriptlib.vec2 import Vec2
 

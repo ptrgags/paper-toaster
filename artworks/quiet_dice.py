@@ -1,7 +1,6 @@
-import argparse
 import random
 
-from postscriptlib import receipts, path
+from postscriptlib import receipts
 
 # Postscript points-per-inch
 PPI = receipts.Receipt.PPI
@@ -17,30 +16,33 @@ CHAR_WIDTH = 7
 
 TITLE_SIZE = 2 * FONT_SIZE
 
-class Receipt(receipts.Receipt):
-    def setup(self):
-        parser = argparse.ArgumentParser()
-        parser.add_argument(
+class QuietDice(receipts.Receipt):
+    ARTWORK_ID = 'quiet_dice'
+
+    @classmethod
+    def add_arguments(cls, subparser):
+        subparser.add_argument(
             "n", 
             type=int, 
             help="how many dice to roll"
         )
-        parser.add_argument(
+        subparser.add_argument(
             "sides", 
             type=int, 
             help="how many sides per die"
         )
-        parser.add_argument(
+        subparser.add_argument(
             "-m",
             "--modifier",
             type=int,
             default=0,
             help="Constant modifier to add to each roll"
         )
-        args = parser.parse_args(self.args)
-        self.n = args.n
-        self.sides = args.sides
-        self.modifier = args.modifier
+
+    def setup(self):
+        self.n = self.args.n
+        self.sides = self.args.sides
+        self.modifier = self.args.modifier
 
         # Divide the paper into rows of 12 points.
         # the title will go in the top 2 rows
