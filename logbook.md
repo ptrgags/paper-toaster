@@ -24,3 +24,28 @@ Next Steps:
 * Make a simple sketch-like interface
 * Try other patterns
 * Make the grids extendable to long receipts
+
+## 2022-06-17 Hitomezashi Stitching Patterns
+
+Today I implemented hitemozashi patterns, inspired by
+[this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also
+started making a sketchbook-like interface for these receipts. I still need
+to refactor `hex_grid` and `fm_ring` though.
+
+## 2022-07-23 Start refactoring
+
+Today I started refactoring `postscriptlib`, adding the following changes:
+
+1. Added the `Vec2` class from a different branch
+2. Refactored how the argparse usage works. Now each artwork adds its own
+    subparser
+3. Added a `circle()` command to draw dots
+4. Refactored the existing artworks and added some more parameters as I went
+
+Next steps:
+
+* Refactor abstractions. A `Document` for global details and a `Page` for
+    things that can be repeated
+* Consider using context managers for paths and graphics states?
+* Add a way to define functions at the document level.
+* Some commands must be stroked immediately, how to handle these?
