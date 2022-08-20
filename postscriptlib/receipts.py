@@ -60,6 +60,12 @@ class Receipt:
     
     def add_lines(self, lines):
         self.postscript_lines.extend(lines)
+
+    def define_function(self, name, lines):
+        self.postscript_lines.append(f"/{name} {{")
+        for line in lines:
+            self.postscript_lines.append(f"  {line}")
+        self.postscript_lines.append(f"}} def")
     
     def set_font(self, font_name, size_points):
         self.postscript_lines.extend([
