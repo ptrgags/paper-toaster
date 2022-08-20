@@ -60,3 +60,11 @@ Next steps:
 * Consider using context managers for paths and graphics states?
 * Add a way to define functions at the document level.
 * Some commands must be stroked immediately, how to handle these?
+
+## 2022-07-24 Braids
+
+Yesterday and today, I tried making a simple tiling of strings crossed into
+braids. It looks pretty cool, but there's more I could potentially do with it.
+For example, I could take a sorting algorithm, keep track of the swaps and
+generate a braid layout. Though I need to think through how to encode such
+steps here

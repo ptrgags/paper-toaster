@@ -31,7 +31,8 @@ if __name__ == "__main__":
         receipt.setup()
         receipt.draw()
         receipt.print(f"output/{args.artwork}.ps")
-    except AttributeError:
+    except AttributeError as error:
+        print(error)
         # No subcommand was specified, so receipt_class
         # is not defined. Print a help message instead
         parser.print_help()
