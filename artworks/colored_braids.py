@@ -7,7 +7,8 @@ STRAIGHT1 = 's1'
 STRAIGHT2 = 's2'
 CROSS = 'cr'
 
-PALETTE = [
+# Rainbow
+PALETTE_RAINBOW = [
     "1 0 0",
     "1 0.5 0",
     "1 1 0",
@@ -19,6 +20,11 @@ PALETTE = [
     "0 0 1",
 ]
 
+GRAY_N = 30
+GRAY_VALUES = [float(i) / GRAY_N for i in range(GRAY_N)]
+PALETTE_GRAYSCALE = [f"{x} {x} {x}" for x in GRAY_VALUES]
+
+PALETTE = PALETTE_RAINBOW
 PALETTE_SIZE = len(PALETTE)
 
 def odd_even_sort(array):
@@ -71,6 +77,7 @@ class ColoredBraids(receipts.Receipt):
         self.square_size = square_size
         self.invert_colors = self.args.invert_colors
 
+    def draw(self):
         bg_color = 0 if self.invert_colors else 1
         thin = 2.0 / self.square_size
         thick = 3 * thin
