@@ -68,3 +68,20 @@ braids. It looks pretty cool, but there's more I could potentially do with it.
 For example, I could take a sorting algorithm, keep track of the swaps and
 generate a braid layout. Though I need to think through how to encode such
 steps here
+
+## 2022-08-23 Colored braids
+
+Today I tried a variation on `braids` that keeps track of a color per strand.
+I tried using an odd-even sort algorithm to generate the braid. It looks nice,
+but the thing is the algorithm stops after `n` iterations, which produces a
+square, not a rectangle of arbitrary size. I'll have to think about another
+way of generating the braid.
+
+## 2022-08-28 Shuffle instead of sort
+
+Today I made the algorithm support an arbitrary number of rows by working
+backwards. Instead of starting with a shuffled array and progressively sorting
+it, I start with a sorted array and apply `n` passes where at each pair of
+strands it randomly chooses whether to swap the strands. The rows use the
+same odd/even staggering as before, which helps to make reasonably dense
+braids.
