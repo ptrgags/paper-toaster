@@ -27,6 +27,30 @@ PALETTE_GRAYSCALE = [f"{x} {x} {x}" for x in GRAY_VALUES]
 PALETTE = PALETTE_RAINBOW
 PALETTE_SIZE = len(PALETTE)
 
+def odd_even_shuffle(array, rows, swap_chance):
+    n = len(array)
+    for i in range(rows):
+        row_commands = []
+        first_index = i % 2
+        
+        if first_index == 1:
+            # Handle a single strand on the left
+            row_commands.append((STRAIGHT1, 0, array[0]))
+
+        for j in range(first_index, n, 2):
+            if j + 1 == n:
+                # Handle a single strand on the right
+                row_commands.append((STRAIGHT1, j, array[j]))
+            elif random.random() < swap_chance:
+                # Swap the two strands
+                row_commands.append((CROSS, j, array[j], array[j + 1]))
+                array[j], array[j + 1] = array[j + 1], array[j]
+            else:
+                # Keep the strands as-is
+                row_commands.append((STRAIGHT2, j, array[j], array[j + 1]))
+            
+        yield row_commands
+
 def odd_even_sort(array):
     sort_pass = 0
     is_sorted = False
@@ -64,6 +88,13 @@ class ColoredBraids(receipts.Receipt):
             help="Size of a grid square in inches. Defaults to 1/4 inch"
         )
         subparser.add_argument(
+            '-c',
+            '--swap-chance',
+            type=float,
+            default=0.5,
+            help="Chance of swapping a braid strand with its neighbor as a number in [0.0, 1.0]"
+        )
+        subparser.add_argument(
             '-i',
             '--invert-colors',
             action="store_true",
@@ -76,6 +107,7 @@ class ColoredBraids(receipts.Receipt):
         self.grid_height = int(self.height / square_size)
         self.square_size = square_size
         self.invert_colors = self.args.invert_colors
+        self.swap_chance = self.args.swap_chance
 
     def draw(self):
         bg_color = 0 if self.invert_colors else 1
@@ -89,7 +121,7 @@ class ColoredBraids(receipts.Receipt):
             "newpath",
             "0 0 moveto",
             "0 0.5 1 0.5 1 1 curveto",
-            # left rope color taken from stack
+            # left strand color taken from stack
             "setrgbcolor",
             f"{thin} setlinewidth",
             "stroke",
@@ -102,7 +134,7 @@ class ColoredBraids(receipts.Receipt):
             "stroke",
             "grestore",
             f"{thin} setlinewidth",
-            # right rope color taken from stack
+            # right strand color taken from stack
             "setrgbcolor",
             "stroke",
         ])
@@ -114,7 +146,7 @@ class ColoredBraids(receipts.Receipt):
             "newpath",
             "0 1 moveto",
             "0 0.5 1 0.5 1 0 curveto",
-            # right rope color taken from stack
+            # right strand color taken from stack
             "setrgbcolor",
             f"{thin} setlinewidth",
             "stroke",
@@ -127,7 +159,7 @@ class ColoredBraids(receipts.Receipt):
             "stroke",
             "grestore",
             f"{thin} setlinewidth",
-            # left rope color taken from stack
+            # left strand color taken from stack
             "setrgbcolor",
             "stroke",
         ])
@@ -137,14 +169,14 @@ class ColoredBraids(receipts.Receipt):
             "newpath",
             "0 0 moveto",
             "0 1 lineto",
-            # left rope color taken from stack
+            # left strand color taken from stack
             "setrgbcolor",
             f"{thin} setlinewidth",
             "stroke",
             "newpath",
             "1 0 moveto",
             "1 1 lineto",
-            # right rope color taken from stack
+            # right strand color taken from stack
             "setrgbcolor",
             f"{thin} setlinewidth",
             "stroke",
@@ -168,12 +200,14 @@ class ColoredBraids(receipts.Receipt):
             f"{self.square_size} {self.square_size} scale",
         ])
 
-        n = self.grid_width + 1
-        rope_array = list(range(n))
-        random.shuffle(rope_array)
+        # strands are on the edges of the grid squares
+        strands = self.grid_height + 1
+        rows = self.grid_height
+        strand_array = list(range(strands))
         
-        for i, rope in enumerate(rope_array):
-            color = PALETTE[rope % PALETTE_SIZE]
+        # Draw the strands straight for the first row
+        for i, strand in enumerate(strand_array):
+            color = PALETTE[strand % PALETTE_SIZE]
             self.add_lines([
                 "gsave",
                 f"{i} 0 translate",
@@ -181,12 +215,14 @@ class ColoredBraids(receipts.Receipt):
                 "grestore"
             ])
         
-        for i, commands in enumerate(odd_even_sort(rope_array)):
+        # Progressively swap strands and add draw the result
+        shuffle_gen = odd_even_shuffle(strand_array, rows - 1, self.swap_chance)
+        for i, commands in enumerate(shuffle_gen):
             y = i + 1
             for (command, *args) in commands:
                 if command == STRAIGHT1:
-                    x, rope = args
-                    color = PALETTE[rope % PALETTE_SIZE]
+                    x, strand = args
+                    color = PALETTE[strand % PALETTE_SIZE]
                     self.add_lines([
                         "gsave",
                         f"{x} {y} translate",
@@ -194,9 +230,9 @@ class ColoredBraids(receipts.Receipt):
                         "grestore"
                     ])
                 elif command == STRAIGHT2:
-                    x, rope1, rope2 = args
-                    left_color = PALETTE[rope1 % PALETTE_SIZE]
-                    right_color = PALETTE[rope2 % PALETTE_SIZE]
+                    x, strand1, strand2 = args
+                    left_color = PALETTE[strand1 % PALETTE_SIZE]
+                    right_color = PALETTE[strand2 % PALETTE_SIZE]
                     self.add_lines([
                         "gsave",
                         f"{x} {y} translate",
@@ -204,9 +240,9 @@ class ColoredBraids(receipts.Receipt):
                         "grestore"
                     ])
                 elif command == CROSS:
-                    x, rope1, rope2 = args
-                    left_color = PALETTE[rope1 % PALETTE_SIZE]
-                    right_color = PALETTE[rope2 % PALETTE_SIZE]
+                    x, strand1, strand2 = args
+                    left_color = PALETTE[strand1 % PALETTE_SIZE]
+                    right_color = PALETTE[strand2 % PALETTE_SIZE]
                     if x % 2 == 0:
                         self.add_lines([
                             "gsave",
