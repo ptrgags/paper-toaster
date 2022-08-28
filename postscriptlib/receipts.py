@@ -2,13 +2,6 @@ class Receipt:
     # PostScript uses 72 points per inch
     PPI = 72
 
-    # I like to print things as art trading cards, which
-    # are 2.5x3.5 inches.
-    ATC_WIDTH_INCHES = 2.5
-    ATC_HEIGHT_INCHES = 3.5
-    ATC_WIDTH_POINTS = ATC_WIDTH_INCHES * PPI
-    ATC_HEIGHT_POINTS = ATC_HEIGHT_INCHES * PPI
-
     @classmethod
     def add_subparser(cls, subparsers):
         """
@@ -33,8 +26,8 @@ class Receipt:
         
         # configure the page layout
         self.num_cards = args.num_cards
-        w = self.ATC_WIDTH_POINTS
-        h = self.num_cards * self.ATC_HEIGHT_POINTS
+        w = args.page_width * self.PPI
+        h = self.num_cards * args.page_height * self.PPI
         if args.landscape:
             w, h = h, w
         self.width = w

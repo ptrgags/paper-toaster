@@ -85,3 +85,6 @@ it, I start with a sorted array and apply `n` passes where at each pair of
 strands it randomly chooses whether to swap the strands. The rows use the
 same odd/even staggering as before, which helps to make reasonably dense
 braids.
+
+I also added `--page-width` and `--page-height` to the global command line
+options so I can make larger prints if so desired.
