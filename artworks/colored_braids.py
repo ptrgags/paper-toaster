@@ -20,8 +20,9 @@ PALETTE_RAINBOW = [
     "0 0 1",
 ]
 
-GRAY_N = 30
-GRAY_VALUES = [float(i) / GRAY_N for i in range(GRAY_N)]
+GRAY_N = 10
+GRAY_VALUES_NORMALIZED = [float(i) / (GRAY_N - 1) for i in range(GRAY_N)]
+GRAY_VALUES = [0.5 * x + 0.25 for x in GRAY_VALUES_NORMALIZED]
 PALETTE_GRAYSCALE = [f"{x} {x} {x}" for x in GRAY_VALUES]
 
 PALETTE = PALETTE_RAINBOW
@@ -201,7 +202,7 @@ class ColoredBraids(receipts.Receipt):
         ])
 
         # strands are on the edges of the grid squares
-        strands = self.grid_height + 1
+        strands = self.grid_width + 1
         rows = self.grid_height
         strand_array = list(range(strands))
         
