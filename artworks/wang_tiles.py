@@ -14,6 +14,26 @@ BLUE = 2
 WHITE = 3
 
 WANG_TILES = [
+    (2, 1, 1, 2),
+    (4, 3, 3, 4),
+    (5, 4, 4, 5),
+    (3, 6, 6, 3),
+    (5, 4, 3, 4),
+    (3, 6, 3, 4),
+    (4, 3, 4, 5),
+    (4, 3, 6, 3),
+    (1, 5, 2, 3),
+    (1, 4, 2, 6),
+    (1, 5, 1, 4),
+    (2, 3, 2, 6),
+    (6, 2, 4, 1),
+    (3, 2, 5, 1),
+    (6, 2, 3, 2),
+    (4, 1, 5, 1),
+]
+
+'''
+WANG_TILES = [
     (RED, RED, GREEN, RED),
     (RED, BLUE, GREEN, BLUE),
     (GREEN, RED, GREEN, GREEN),
@@ -26,6 +46,7 @@ WANG_TILES = [
     (GREEN, GREEN, RED, BLUE),
     (WHITE, RED, GREEN, RED)
 ]
+'''
 
 def init_tile_choices():
     result = {}
