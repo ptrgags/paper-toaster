@@ -46,4 +46,4 @@ class PriorityQueue:
             if item is not REMOVED:
                 del self.reverse_lookup[item]
                 return item
-        raise RuntimeError("OH SHIT")
+        return None

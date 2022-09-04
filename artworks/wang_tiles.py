@@ -13,40 +13,50 @@ GREEN = 1
 BLUE = 2
 WHITE = 3
 
-WANG_TILES = [
-    (2, 1, 1, 2),
-    (4, 3, 3, 4),
-    (5, 4, 4, 5),
-    (3, 6, 6, 3),
-    (5, 4, 3, 4),
-    (3, 6, 3, 4),
-    (4, 3, 4, 5),
-    (4, 3, 6, 3),
-    (1, 5, 2, 3),
-    (1, 4, 2, 6),
-    (1, 5, 1, 4),
-    (2, 3, 2, 6),
-    (6, 2, 4, 1),
-    (3, 2, 5, 1),
-    (6, 2, 3, 2),
-    (4, 1, 5, 1),
-]
+A = 0
+B = 1
+AB = 2
+BA = 3
 
-'''
+TILE_COMMANDS = {
+    (A, A, A, A): ("fill_A", 0),
+    (B, B, B, B): ("fill_B", 0),
+
+    (B, AB, A, AB): ("half", 0),
+    (BA, B, BA, A): ("half", 1),
+    (A, BA, B, BA): ("half", 2),
+    (AB, A, AB, B): ("half", 3),
+
+    (A, A, AB, BA): ("corner_B", 0),
+    (AB, A, A, AB): ("corner_B", 1),
+    (BA, AB, A, A): ("corner_B", 2),
+    (A, BA, BA, A): ("corner_B", 3),
+
+    (B, B, BA, AB): ("corner_A", 0),
+    (BA, B, B, BA): ("corner_A", 1),
+    (AB, BA, B, B): ("corner_A", 2),
+    (B, AB, AB, B): ("corner_A", 3)
+}
+
 WANG_TILES = [
-    (RED, RED, GREEN, RED),
-    (RED, BLUE, GREEN, BLUE),
-    (GREEN, RED, GREEN, GREEN),
-    (BLUE, WHITE, BLUE, RED),
-    (BLUE, BLUE, BLUE, WHITE),
-    (WHITE, WHITE, WHITE, RED),
-    (GREEN, RED, WHITE, BLUE),
-    (WHITE, BLUE, RED, BLUE),
-    (RED, BLUE, RED, WHITE),
-    (GREEN, GREEN, RED, BLUE),
-    (WHITE, RED, GREEN, RED)
+    (A, A, A, A, "fill_A", 0),
+    (B, B, B, B, "fill_B", 0),
+
+    (B, AB, A, AB, "half", 0),
+    (BA, B, BA, A, "half", 1),
+    (A, BA, B, BA, "half", 2),
+    (AB, A, AB, B, "half", 3),
+
+    (A, A, AB, BA, "corner_B", 0),
+    (AB, A, A, AB, "corner_B", 1),
+    (BA, AB, A, A, "corner_B", 2),
+    (A, BA, BA, A, "corner_B", 3),
+
+    (B, B, BA, AB, "corner_A", 0),
+    (BA, B, B, BA, "corner_A", 1),
+    (AB, BA, B, B, "corner_A", 2),
+    (B, AB, AB, B, "corner_A", 3),
 ]
-'''
 
 def init_tile_choices():
     result = {}
@@ -80,7 +90,7 @@ class Cell:
         i = self.row
         j = self.column
         
-        (right_color, up_color, left_color, down_color) = WANG_TILES[self.tile]
+        (right_color, up_color, left_color, down_color, _, _) = WANG_TILES[self.tile]
         
         # Get the neighbor tile coordinates, along with a constraint.
         # the adjacent tile will have the opposite direction, but the same
@@ -170,4 +180,60 @@ class WangTiles(receipts.Receipt):
             cell = self.priority_queue.pop()
     
     def draw(self):
-        pass
+        self.define_function("fill_A", [])
+
+        self.define_function("fill_B", [
+            "0 setgray",
+            "0 0 1 1 rectfill"
+        ])
+
+        self.define_function("half", [
+            "0 setgray",
+            "0.5 0 0.5 1 rectfill",
+        ])
+
+        self.define_function("corner_B", [
+            "0 setgray",
+            "0 0 0.5 0.5 rectfill"
+        ])
+
+        self.define_function("corner_A", [
+            "0 setgray",
+            "0 0 1 1 rectfill",
+            "1 setgray",
+            "0 0 0.5 0.5 rectfill"
+        ])
+
+        self.define_function("rot90", [
+            "0.5 0.5 translate",
+            "90 mul rotate",
+            "-0.5 -0.5 translate"
+        ])
+
+        self.add_lines([
+            "gsave",
+            f"{self.square_size} {self.square_size} scale",
+            f"{1.0 / self.square_size} setlinewidth"
+        ])
+
+        for i in range(self.grid_height):
+            y = (self.grid_height - 1) - i
+            for j in range(self.grid_width):
+                x = j
+                
+                cell = self.tiles[i * self.grid_width + j]
+                _, _, _, _, command, rotation = WANG_TILES[cell.tile]
+
+                self.add_lines([
+                    "gsave",
+                    f"{x} {y} translate",
+                    f"{rotation} rot90",
+                    command,
+                    "grestore"
+                ])
+        
+        self.add_lines([
+            "grestore",
+            f"0 0 {self.width} {self.height} rectstroke",
+        ])
+
