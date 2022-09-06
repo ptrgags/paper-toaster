@@ -68,3 +68,13 @@ braids. It looks pretty cool, but there's more I could potentially do with it.
 For example, I could take a sorting algorithm, keep track of the swaps and
 generate a braid layout. Though I need to think through how to encode such
 steps here
+
+## 2022-08-04 (Simplified) Wave Function Collapse
+
+Today I tried implementing a simplified version of the
+[Wave Function Collapse Algorithm](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/). Originally
+I tried to do this with [Wang Tiles](https://en.wikipedia.org/wiki/Wang_tile), but this was not possible. Not every combination of edge pairings is included in the set of tiles,
+so pretty quickly the algorithm ends up with no choices.
+
+Instead of that, I made a tiling that's just rectangles in 2
+colors. Either full tiles, half tiles, or 1/4 tiles.
