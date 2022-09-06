@@ -199,10 +199,11 @@ class ColoredBraids(receipts.Receipt):
             f"{bg_color} setgray",
             f"0 0 {self.width} {self.height} rectfill",
             f"{self.square_size} {self.square_size} scale",
+            f"0.5 0 translate"
         ])
 
         # strands are on the edges of the grid squares
-        strands = self.grid_width + 1
+        strands = self.grid_width
         rows = self.grid_height
         strand_array = list(range(strands))
         
