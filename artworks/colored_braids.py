@@ -33,7 +33,13 @@ PALETTE_STRIPES = [
     "0.5 0.5 0.5"
 ]
 
-PALETTE = PALETTE_STRIPES
+PALETTE_KINDLE = [
+    "0 0 0",
+    "0.25 0.25 0.25",
+    "0.5 0.5 0.5"
+]
+
+PALETTE = PALETTE_KINDLE
 PALETTE_SIZE = len(PALETTE)
 
 def odd_even_shuffle(array, rows, swap_chance):
@@ -120,6 +126,13 @@ class ColoredBraids(receipts.Receipt):
             help="Size of a grid square in inches. Defaults to 1/4 inch"
         )
         subparser.add_argument(
+            "-w",
+            "--stroke-width",
+            type=float,
+            default=2.0,
+            help="width of a single strand in points"
+        )
+        subparser.add_argument(
             '-c',
             '--swap-chance',
             type=float,
@@ -153,6 +166,7 @@ class ColoredBraids(receipts.Receipt):
         self.square_size = square_size
         self.invert_colors = self.args.invert_colors
         self.swap_chance = self.args.swap_chance
+        self.stroke_width = self.args.stroke_width
 
         num_strands = self.grid_width
         self.groups = self.args.groups or [num_strands]
@@ -160,7 +174,7 @@ class ColoredBraids(receipts.Receipt):
 
     def draw(self):
         bg_color = 0 if self.invert_colors else 1
-        thin = 2.0 / self.square_size
+        thin = self.stroke_width / self.square_size
         thick = 3 * thin
 
         # usage: right_color left_color right_over_left
