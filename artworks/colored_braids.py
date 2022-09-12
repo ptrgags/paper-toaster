@@ -39,7 +39,13 @@ PALETTE_KINDLE = [
     "0.5 0.5 0.5"
 ]
 
-PALETTE = PALETTE_KINDLE
+PALETTE_INVERTED = [
+    "0.5 0.5 0.5",
+    "0.75 0.75 0.75",
+    "1 1 1"
+]
+
+PALETTE = PALETTE_INVERTED
 PALETTE_SIZE = len(PALETTE)
 
 def odd_even_shuffle(array, rows, swap_chance):
