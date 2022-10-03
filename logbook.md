@@ -43,6 +43,10 @@ Next Steps:
 * I have an idea for varying the hitomezashi patterns with variable widths
 * I want to make tilings of the plane for more interesting grids to print.
 
+## 2022-07-09 Elementary Cellular Automaton
+
+Today I added a simple sketch that generates elementary cellular automata.
+
 ## 2022-07-23 Start refactoring
 
 Today I started refactoring `postscriptlib`, adding the following changes:
