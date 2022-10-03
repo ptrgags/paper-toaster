@@ -1,5 +1,4 @@
 import argparse
-import importlib
 
 from artworks import ARTWORKS
 
@@ -26,8 +25,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Receipt.add_subparser stores the class in the args
-    ReceiptClass = args.receipt_class
-    receipt = ReceiptClass(args)
-    receipt.setup()
-    receipt.draw()
-    receipt.print(f"output/{args.artwork}.ps")
+    try:
+        ReceiptClass = args.receipt_class
+        receipt = ReceiptClass(args)
+        receipt.setup()
+        receipt.draw()
+        receipt.print(f"output/{args.artwork}.ps")
+    except AttributeError as error:
+        print(error)
+        # No subcommand was specified, so receipt_class
+        # is not defined. Print a help message instead
+        parser.print_help()

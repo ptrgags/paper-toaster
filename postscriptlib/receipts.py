@@ -73,6 +73,25 @@ class Receipt:
     def fill_page(self):
         self.rectfill(0, 0, self.width, self.height)
 
+    def define_function(self, name, lines):
+        self.postscript_lines.append(f"/{name} {{")
+        for line in lines:
+            self.postscript_lines.append(f"  {line}")
+        self.postscript_lines.append(f"}} def")
+    
+    def set_font(self, font_name, size_points):
+        self.postscript_lines.extend([
+            f"/{font_name} findfont",
+            f"{size_points} scalefont",
+            "setfont"
+        ])
+
+    def draw_text(self, position, text):
+        self.postscript_lines.extend([
+            f"{position.x} {position.y} moveto",
+            f"({text}) show"
+        ])
+
     def setup(self):
         pass
     

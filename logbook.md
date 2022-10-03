@@ -29,8 +29,19 @@ Next Steps:
 
 Today I implemented hitemozashi patterns, inspired by
 [this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also
-started making a sketchbook-like interface for these receipts. I still need
-to refactor `hex_grid` and `fm_ring` though.
+started making a sketchbook-like interface for these receipts.
+
+## 2022-06-20 Quiet Dice
+
+Today I explored writing text in PostScript. I made a simple "quiet dice"
+roller -- it's just a list of randomly generated numbers. Ideal for when you
+need a lot of dice rolls (e.g. I sometimes procedurally generate dice) but
+actual dice are either not available, or would be too noisy.
+
+Next Steps:
+
+* I have an idea for varying the hitomezashi patterns with variable widths
+* I want to make tilings of the plane for more interesting grids to print.
 
 ## 2022-07-23 Start refactoring
 
@@ -49,6 +60,14 @@ Next steps:
 * Consider using context managers for paths and graphics states?
 * Add a way to define functions at the document level.
 * Some commands must be stroked immediately, how to handle these?
+
+## 2022-07-24 Braids
+
+Yesterday and today, I tried making a simple tiling of strings crossed into
+braids. It looks pretty cool, but there's more I could potentially do with it.
+For example, I could take a sorting algorithm, keep track of the swaps and
+generate a braid layout. Though I need to think through how to encode such
+steps here
 
 ## 2022-07-24 Iso Grid
 
