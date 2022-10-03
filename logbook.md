@@ -68,3 +68,9 @@ braids. It looks pretty cool, but there's more I could potentially do with it.
 For example, I could take a sorting algorithm, keep track of the swaps and
 generate a braid layout. Though I need to think through how to encode such
 steps here
+
+## 2022-07-24 Iso Grid
+
+Today I made a script to render an isometric map given a grid of height
+values. It works best when the heights increase towards the top right corner
+of the grid, else things get occluded
