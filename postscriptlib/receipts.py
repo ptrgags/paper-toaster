@@ -12,9 +12,7 @@ class Receipt:
     @classmethod
     def add_subparser(cls, subparsers):
         """
-        For each receipt, override this method
-        and add a subparser. Additional arguments
-        can be added as desired.
+        For each receipt, add a subparser
         """
         subparser = subparsers.add_parser(cls.ARTWORK_ID)
         cls.add_arguments(subparser)
