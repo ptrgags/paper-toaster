@@ -21,6 +21,9 @@ class Rectangle:
         return self.max.y - self.min.y
 
     def add_point(self, point):
+        """
+        Expand a rectangle by adding a point.
+        """
         x = point.x
         y = point.y
 

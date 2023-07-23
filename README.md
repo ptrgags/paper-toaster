@@ -37,5 +37,5 @@ Here is a list of artwork IDs and what they do:
     equations.
 * `turtle_dance [options] {natural,square,triangle,fibonacci} A B` - Generates
     patterns with turtle graphics taking a sequence of numbers and two integers
-    `A` and `B` for modular arithmetic. This is a generalization of [This 
-    Bridges math art paper](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)
+    `A` and `B` for modular arithmetic. This is a generalization of ["Let the Numbers Do the Walking:
+Generating Turtle Dances on the Plane from Integer Sequences"](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)

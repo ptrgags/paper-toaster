@@ -48,13 +48,12 @@ Next Steps:
     generalized for other sequences?
 * Experiment with more sequences
 
-
 ## 2022-06-28 Exploring Turtle Dances
 
 Today I added the angle divisions and added a stopping condition. Not perfect,
 but most of the time it gives decent results
 
-Here are some 
+Here are some example settings:
 
 ```text
 natural 45 25 --fill
