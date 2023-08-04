@@ -23,6 +23,12 @@ class Vec2:
         y = self.y * other.y
         return Vec2(x, y)
     
+    def __neg__(self):
+        return Vec2(-self.x, -self.y)
+    
+    def __repr__(self):
+        return f'Vec2({self.x, self.y})'
+    
     def __rmul__(self, scalar):
         """
         Scalar multiplication. Scalar goes on the left

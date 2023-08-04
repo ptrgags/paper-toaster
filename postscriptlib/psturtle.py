@@ -66,11 +66,7 @@ class PSTurtle:
             remap(in_min, in_max, out_min, out_max, v)
             for v in self.positions
         ]
-        tuples = [
-            (v.x, v.y)
-            for v in scaled_positions
-        ]
 
         path = Path()
-        path.polygon(tuples)
+        path.polygon(scaled_positions)
         return path

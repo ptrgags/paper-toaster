@@ -28,9 +28,19 @@ Next Steps:
 ## 2022-06-17 Hitomezashi Stitching Patterns
 
 Today I implemented hitemozashi patterns, inspired by
-[this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also
-started making a sketchbook-like interface for these receipts. I still need
-to refactor `hex_grid` and `fm_ring` though.
+[this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). I also started making a sketchbook-like interface for these receipts.
+
+## 2022-06-20 Quiet Dice
+
+Today I explored writing text in PostScript. I made a simple "quiet dice"
+roller -- it's just a list of randomly generated numbers. Ideal for when you
+need a lot of dice rolls (e.g. I sometimes procedurally generate dice) but
+actual dice are either not available, or would be too noisy.
+
+Next Steps:
+
+* I have an idea for varying the hitomezashi patterns with variable widths
+* I want to make tilings of the plane for more interesting grids to print.
 
 ## 2022-06-27 Dancing Turtles
 
@@ -48,13 +58,12 @@ Next Steps:
     generalized for other sequences?
 * Experiment with more sequences
 
-
 ## 2022-06-28 Exploring Turtle Dances
 
 Today I added the angle divisions and added a stopping condition. Not perfect,
 but most of the time it gives decent results
 
-Here are some 
+Here are some example settings:
 
 ```text
 natural 45 25 --fill
@@ -108,3 +117,39 @@ Next Steps:
 * See if there's a faster way to implement L-systems, the strings grow 
     exponentially which isn't great. Maybe take a look at
     [this article?](https://mzucker.github.io/2020/03/28/optimizing-lsystems.html)
+
+## 2022-07-09 Elementary Cellular Automaton
+
+Today I added a simple sketch that generates elementary cellular automata.
+
+## 2022-07-23 Start refactoring
+
+Today I started refactoring `postscriptlib`, adding the following changes:
+
+1. Added the `Vec2` class from a different branch
+2. Refactored how the argparse usage works. Now each artwork adds its own
+    subparser
+3. Added a `circle()` command to draw dots
+4. Refactored the existing artworks and added some more parameters as I went
+
+Next steps:
+
+* Refactor abstractions. A `Document` for global details and a `Page` for
+    things that can be repeated
+* Consider using context managers for paths and graphics states?
+* Add a way to define functions at the document level.
+* Some commands must be stroked immediately, how to handle these?
+
+## 2022-07-24 Braids
+
+Yesterday and today, I tried making a simple tiling of strings crossed into
+braids. It looks pretty cool, but there's more I could potentially do with it.
+For example, I could take a sorting algorithm, keep track of the swaps and
+generate a braid layout. Though I need to think through how to encode such
+steps here
+
+## 2022-07-24 Iso Grid
+
+Today I made a script to render an isometric map given a grid of height
+values. It works best when the heights increase towards the top right corner
+of the grid, else things get occluded
