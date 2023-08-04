@@ -6,6 +6,7 @@ from artworks.hex_grid import HexGrid
 from artworks.hitomezashi import Hitomezashi
 from artworks.iso_grid import IsoGrid
 from artworks.quiet_dice import QuietDice
+from artworks.turtle_dance import TurtleDance
 
 ARTWORKS = [
     Braids,
@@ -15,5 +16,6 @@ ARTWORKS = [
     HexGrid,
     Hitomezashi,
     IsoGrid,
-    QuietDice
+    QuietDice,
+    TurtleDance
 ]
