@@ -35,9 +35,12 @@ Here is a list of artwork IDs and what they do:
 * `hex_grid` - prints a hexagonal grid pattern
 * `fm_ring` - prints a generative art using frequency modulation and parametric
     equations.
+* `barcode_code128 <text>` - Encodes text as a
+    [Code 128](https://en.wikipedia.org/wiki/Code_128) barcode.
 * `turtle_dance [options] {natural,square,triangle,fibonacci} A B` - Generates
     patterns with turtle graphics taking a sequence of numbers and two integers
-    `A` and `B` for modular arithmetic. This is a generalization of ["Let the Numbers Do the Walking:
+    `A` and `B` for modular arithmetic. This is a generalization of
+    ["Let the Numbers Do the Walking:
 Generating Turtle Dances on the Plane from Integer Sequences"](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)
 * `quiet_dice -- <n> <sides> [-m <modifier>]` - rolls the give dice expression
     `<n>d<s> + <modifier>` many times and prints a table of results. Perfect for

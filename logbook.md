@@ -105,6 +105,22 @@ Next Steps:
 * I think I want to move on to another idea with turtle graphics concerning
     generalized Hilbert curves, but I'll do that on another branch.
 
+## 2022-07-03 Code 128 Barcodes
+
+Today I started learning about barcodes. There's many different types from
+UPC-A (used for labeling products for sale) to Code 128 (general-purpose
+alphanumeric codes), and others (EAN, QR, PDF 417, to name a few others). I
+started with Code 128 since it isn't too complicated of an encoding scheme
+and supports alphanumeric characters, not just numbers.
+
+Next Steps:
+
+* Figure out a better way to handle the barcode given it is variable size.
+    maybe landscape? Or compute the module size based on the output length?
+* Allow exporting a text file with the 0s and 1s of the barcode, might be
+    interesting to try making musical rhythms from the results (if so, would be
+    done in a different repo)
+
 ## 2022-07-09 Elementary Cellular Automaton
 
 Today I added a simple sketch that generates elementary cellular automata.
@@ -140,3 +156,4 @@ steps here
 Today I made a script to render an isometric map given a grid of height
 values. It works best when the heights increase towards the top right corner
 of the grid, else things get occluded
+
