@@ -1,6 +1,7 @@
 from artworks.braids import Braids
 from artworks.elementary_ca import ElementaryCA
 from artworks.fm_ring import FMRing
+from artworks.generalized_hilbert import GeneralizedHilbert
 from artworks.grid import Grid
 from artworks.hex_grid import HexGrid
 from artworks.hitomezashi import Hitomezashi
@@ -12,6 +13,7 @@ ARTWORKS = [
     Braids,
     ElementaryCA,
     FMRing,
+    GeneralizedHilbert,
     Grid,
     HexGrid,
     Hitomezashi,

@@ -65,7 +65,9 @@ DIVISIONS = 4
 RULE = RULE_SPIRAL
 ITERS = 2
 
-class Receipt(receipts.Receipt):
+class GeneralizedHilbert(receipts.Receipt):
+    ARTWORK_ID = 'generalized_hilbert'
+
     def setup(self):
         self.turtle = PSTurtle(angle_divisions=DIVISIONS)
         self.l_system = LSystem(make_rules(RULE), "a")
