@@ -1,32 +1,38 @@
 import argparse
-import importlib
 
-ARTWORK_LIST = [
-    "grid",
-    "hex_grid",
-    "fm_ring",
-    "hitomezashi",
-    "barcode_code128"
-]
+from artworks import ARTWORKS
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("artwork", choices=ARTWORK_LIST)
     parser.add_argument(
         "--num-cards",
         type=int,
         default=1,
-        help="How many trading cards tall (3.5 inches) the receipt should be"
+        help="How many trading cards tall (3.5 inches) each page of the receipt should be"
     )
     parser.add_argument(
-        "artwork_args",
-        nargs="*",
-        help="additional arguments if needed"
+        "--landscape",
+        action="store_true",
+        help="If set, the pages will use landscape rather than portrait orientation"
     )
+    subparsers = parser.add_subparsers(dest='artwork')
+
+    # Each receipt will add a subparser, so the overall usage
+    # becomes main.py [global_options] ARTWORK [artwork_options]
+    for artwork in ARTWORKS:
+        artwork.add_subparser(subparsers)
+
     args = parser.parse_args()
 
-    module = importlib.import_module(f"artworks.{args.artwork}")
-    light_show = module.Receipt(args.num_cards, args.artwork_args)
-    light_show.setup()
-    light_show.draw()
-    light_show.print(f"output/{args.artwork}.ps")
+    # Receipt.add_subparser stores the class in the args
+    try:
+        ReceiptClass = args.receipt_class
+        receipt = ReceiptClass(args)
+        receipt.setup()
+        receipt.draw()
+        receipt.print(f"output/{args.artwork}.ps")
+    except AttributeError as error:
+        print(error)
+        # No subcommand was specified, so receipt_class
+        # is not defined. Print a help message instead
+        parser.print_help()
