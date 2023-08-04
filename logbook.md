@@ -105,6 +105,19 @@ Next Steps:
 * I think I want to move on to another idea with turtle graphics concerning
     generalized Hilbert curves, but I'll do that on another branch.
 
+## 2022-06-29 Generalized Hilbert Curves
+
+Today I took the turtle graphics implementation and used it to make generalized
+Hilbert curves, based on the paper ["Tendril Motifs for Space-Filling, Half Domino Curves"](https://archive.bridgesmathart.org/2016/bridges2016-119.html). Working nicely, though I should generalize the script so
+you can select the number of iterations and load the rules from a JSON file.
+
+Next Steps:
+
+* Add command line arguments
+* See if there's a faster way to implement L-systems, the strings grow 
+    exponentially which isn't great. Maybe take a look at
+    [this article?](https://mzucker.github.io/2020/03/28/optimizing-lsystems.html)
+
 ## 2022-07-09 Elementary Cellular Automaton
 
 Today I added a simple sketch that generates elementary cellular automata.

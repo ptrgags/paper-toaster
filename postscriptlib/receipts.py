@@ -51,6 +51,9 @@ class Receipt:
     
     def add_path(self, path):
         self.postscript_lines.extend(path.to_postscript())
+    
+    def set_line_width(self, width):
+        self.postscript_lines.append(f"{width} setlinewidth")
 
     def stroke(self):
         self.postscript_lines.append("stroke")
