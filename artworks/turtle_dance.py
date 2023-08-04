@@ -66,38 +66,40 @@ def modular_difference(seq, a, b):
     for x in seq:
         yield x % a - x % b
 
-class Receipt(receipts.Receipt):
-    def setup(self):
-        if self.num_cards > 1:
-            raise ValueError("turtle_dance only supports 1 card")
+class TurtleDance(receipts.Receipt):
+    ARTWORK_ID = 'turtle_dance'
 
-        parser = argparse.ArgumentParser()
-        parser.add_argument(
+    @classmethod
+    def add_arguments(cls, subparser):
+        subparser.add_argument(
             "sequence",
             choices=SEQUENCE_CHOICES,
             help="Which sequence to use to generate the image"
         )
-        parser.add_argument("a", type=int, help="first modulus")
-        parser.add_argument("b", type=int, help="second modulus")
-        parser.add_argument(
+        subparser.add_argument("a", type=int, help="first modulus")
+        subparser.add_argument("b", type=int, help="second modulus")
+        subparser.add_argument(
             "--divisions",
             type=int,
             default=360,
             help="Angles used are 2 pi / divisions"
         )
-        parser.add_argument(
+        subparser.add_argument(
             "--fill",
             action="store_true",
             help="even/odd fill instead of stroke the path"
         )
-        args = parser.parse_args(self.args)
+
+    def setup(self):
+        if self.num_cards > 1:
+            raise ValueError("turtle_dance only supports 1 card")
 
         self.sequence = modular_difference(
-            select_sequence(args.sequence),
-            args.a,
-            args.b
+            select_sequence(self.args.sequence),
+            self.args.a,
+            self.args.b
         )
-        self.should_fill = args.fill
+        self.should_fill = self.args.fill
 
         # make a 2 inch bounding box in which we will draw
         # the pattern
@@ -111,7 +113,7 @@ class Receipt(receipts.Receipt):
             box_width
         )
 
-        self.turtle = PSTurtle(args.divisions)
+        self.turtle = PSTurtle(self.args.divisions)
 
     def turtle_dance(self):
         for i in itertools.count(1):

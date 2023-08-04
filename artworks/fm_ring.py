@@ -47,7 +47,9 @@ def fm_ring(wave, inner_radius, outer_radius, num_samples):
         results[i] = (radius * x, radius * y)
     return results
 
-class Receipt(receipts.Receipt):
+class FMRing(receipts.Receipt):
+    ARTWORK_ID = 'fm_ring'
+
     def setup(self):
         if self.num_cards > 1:
             raise ValueError("fm_ring only supports 1 card")
