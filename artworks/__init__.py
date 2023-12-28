@@ -7,6 +7,7 @@ from artworks.hex_grid import HexGrid
 from artworks.hitomezashi import Hitomezashi
 from artworks.iso_grid import IsoGrid
 from artworks.quiet_dice import QuietDice
+from artworks.todo import ToDoList
 from artworks.turtle_dance import TurtleDance
 
 ARTWORKS = [
@@ -19,5 +20,6 @@ ARTWORKS = [
     Hitomezashi,
     IsoGrid,
     QuietDice,
+    ToDoList,
     TurtleDance
 ]
