@@ -198,4 +198,16 @@ two properties:
     any path from a source, it should always lead to a sink
     (Or at least not lead to another source?)
 2. For the "braid" like crossings, there's only one tile
-    technically, but it can be rotated 90 degrees in checkerboard-fashion to make a more weave-like pattern.
+    technically, but it can be rotated 90 degrees in checkerboard-fashion to 
+    make a more weave-like pattern.
+
+## 2023-12-28 Repo Cleanup and Documentation
+
+Today I worked on a few different things to clean up this repo:
+
+1. I merged some stale PRs so everything is in one place
+2. I updated the script so it automatically runs `ps2pdf` and 
+    `gs -sDEVICE=png16m` on the output so I get a PDF file for printing and
+    PNG images for displaying in the README and eventually on my website.
+3. I started adding screenshots and more detailed documentation to the README.
+    This may take a few more sittings to finish.
