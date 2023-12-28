@@ -1,4 +1,4 @@
-# Receipt Art (2022)
+# Receipt Art (2022, 2023)
 
 This repo is for generative art with PostScript output that can be printed
 to standard `3 1/8 inch` receipt paper.
