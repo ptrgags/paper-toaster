@@ -45,7 +45,7 @@ PALETTE_INVERTED = [
     "1 1 1"
 ]
 
-PALETTE = PALETTE_INVERTED
+PALETTE = PALETTE_RAINBOW
 PALETTE_SIZE = len(PALETTE)
 
 def odd_even_shuffle(array, rows, swap_chance):
