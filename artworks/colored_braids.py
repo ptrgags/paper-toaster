@@ -72,30 +72,6 @@ def odd_even_shuffle(array, rows, swap_chance):
             
         yield row_commands
 
-def odd_even_sort(array):
-    sort_pass = 0
-    is_sorted = False
-    n = len(array)
-    while not is_sorted:
-        is_sorted = True
-        row_commands = []
-        first_index = sort_pass % 2
-
-        if first_index == 1:
-            row_commands.append((STRAIGHT1, 0, array[0]))
-
-        for i in range(first_index, n, 2):
-            if i + 1 == n:
-                row_commands.append((STRAIGHT1, i, array[i]))
-            elif array[i] > array[i + 1]:
-                row_commands.append((CROSS, i, array[i], array[i + 1]))
-                array[i], array[i + 1] = array[i + 1], array[i]
-                is_sorted = False
-            else:
-                row_commands.append((STRAIGHT2, i, array[i], array[i + 1]))
-        yield row_commands
-        sort_pass += 1
-
 def strand_groups(s):
     return [int(x) for x in s.split(",")]
 
