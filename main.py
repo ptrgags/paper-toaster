@@ -1,6 +1,12 @@
 import argparse
+import subprocess
 
 from artworks import ARTWORKS
+
+def postprocess(filename):
+    # Convert PS -> PDF since this is what I usually print. This requires
+    # ghostscript installed!
+    subprocess.run(["ps2pdf", filename], capture_output=True, shell=True)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -42,7 +48,9 @@ if __name__ == "__main__":
         receipt = ReceiptClass(args)
         receipt.setup()
         receipt.draw()
-        receipt.print(f"output/{args.artwork}.ps")
+        filename = f"output/{args.artwork}.ps"
+        receipt.print(filename)
+        postprocess(filename)
     except AttributeError as error:
         print(error)
         # No subcommand was specified, so receipt_class
