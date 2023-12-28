@@ -11,6 +11,18 @@ if __name__ == "__main__":
         help="How many trading cards tall (3.5 inches) each page of the receipt should be"
     )
     parser.add_argument(
+        "--page-width",
+        type=float,
+        default=2.5, # width of an art trading card
+        help="Width of a single page in inches"
+    )
+    parser.add_argument(
+        "--page-height",
+        type=float,
+        default=3.5, # height of an art trading card
+        help="Height of a single page in inches"
+    )
+    parser.add_argument(
         "--landscape",
         action="store_true",
         help="If set, the pages will use landscape rather than portrait orientation"
