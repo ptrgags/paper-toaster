@@ -1,4 +1,4 @@
-# Receipt Art (2022, 2023)
+# Paper Toaster (Thermal Receipt Printer Art) (2022, 2023)
 
 This repo is for generative art with PostScript output that can be printed
 to standard 3 1/8 inch (80 mm) thermal receipt paper. I personally use [this 
@@ -7,6 +7,9 @@ Rongta point-of-sale (POS) printer](https://www.amazon.com/gp/product/B08V4H7T47
 I like to make my art at art trading card size (2.5 x 3.5 in), so this code is
 designed around that. This size is conveniently just a little bit narrower
 than the paper, so it pairs well.
+
+I jokingly refer to my receipt printer as a "paper toaster" since a thermal
+printer works by heating the thermal paper, darkening it. No ink is used.
 
 ## Dependencies
 
