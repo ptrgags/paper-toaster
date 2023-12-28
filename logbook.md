@@ -176,3 +176,26 @@ braids.
 
 I also added `--page-width` and `--page-height` to the global command line
 options so I can make larger prints if so desired.
+
+## 2022-09-03 Edge Direction Tiling
+
+Today I made a rather tangled-looking tiling based on placing
+arrows on each edge of the tiling, pointing in or out of the
+tiles. Then lines are drawn inside the tile to connect the
+arrows in such a way that the flow is consistent. Sometimes
+this requires some special cases, like creating a source where
+all the arrows point outwards or a sink where all the arrows
+point inwards. Furthermore, there are cases where there are
+multiple possible ways to draw the lines, I allow random
+choices in such cases.
+
+In retrospect, I could have implemented this by just randomly
+placing tiles, since all the tiles except the edges connect at
+all 4 edges. However, I did the extra effort to ensure the
+two properties:
+
+1. The flow of the arrows should be consistent. If you trace
+    any path from a source, it should always lead to a sink
+    (Or at least not lead to another source?)
+2. For the "braid" like crossings, there's only one tile
+    technically, but it can be rotated 90 degrees in checkerboard-fashion to make a more weave-like pattern.

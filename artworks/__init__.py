@@ -1,6 +1,7 @@
 from artworks.barcode_code128 import Barcode128
 from artworks.braids import Braids
 from artworks.colored_braids import ColoredBraids
+from artworks.edge_directions import EdgeDirectionTiling
 from artworks.elementary_ca import ElementaryCA
 from artworks.fm_ring import FMRing
 from artworks.grid import Grid
@@ -15,6 +16,7 @@ ARTWORKS = [
     Barcode128,
     Braids,
     ColoredBraids,
+    EdgeDirectionTiling,
     ElementaryCA,
     FMRing,
     Grid,
