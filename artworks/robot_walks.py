@@ -7,6 +7,7 @@ from postscriptlib.vec2 import Vec2
 # Working with the fifth roots of unity
 N = 5
 TAU = 2.0 * math.pi
+TAU_DEGREES = 360
 BASIS = [
     Vec2.direction_vec(TAU * i / N)
     for i in range(N)
@@ -15,7 +16,9 @@ DIRECTIONS = [
     BASIS[(i + 1) % N] - BASIS[i]
     for i in range(N)
 ]
-PATH_LENGTH = 1
+PATH_LENGTH = 3
+
+RADIUS = 3
 
 class RobotWalks(receipts.Receipt):
     ARTWORK_ID = "robot_walks"
@@ -52,7 +55,7 @@ class RobotWalks(receipts.Receipt):
             self.path.append(
                 # Make a copy of the position vector because it will be
                 # modified
-                (self.position[:], self.orientation)
+                (self.position[:], self.orientation, command)
             )
 
     def setup(self):
@@ -67,7 +70,7 @@ class RobotWalks(receipts.Receipt):
         self.commands = []
         
         # The path of states the robot goes through
-        self.path = [(self.position[:], self.orientation)]
+        self.path = [(self.position[:], self.orientation, None)]
 
         self.generate_commands()
         print(self.commands)
@@ -84,9 +87,9 @@ class RobotWalks(receipts.Receipt):
         center = Vec2(self.width / 2, self.height / 2)
 
         vertices = []
-        for (position_vec, _) in self.path:
+        for (position_vec, _, _) in self.path:
             position = RobotWalks.compute_position(position_vec)
-            ps_position = 3 * position + center
+            ps_position = RADIUS * position + center
             print(position_vec, position, ps_position)
             vertices.append(ps_position)
         
@@ -94,6 +97,34 @@ class RobotWalks(receipts.Receipt):
         lines.polygon(vertices)
         self.add_path(lines)
         self.add_lines(["0.1 setlinewidth stroke"])
+
+        self.add_lines([
+            "newpath",
+            f"{vertices[0].x} {vertices[0].y} moveto"
+        ])
+        for (position_vec, orientation, command) in self.path[1:]:
+            current_position = RobotWalks.compute_position(position_vec)
+            ps_position = RADIUS * current_position + center
+            current_direction = Vec2.direction_vec(orientation * TAU / 5)
+
+            if command == 'L':
+                curr_angle = orientation * TAU_DEGREES / 5
+                prev_angle = (orientation - 1) * TAU_DEGREES / 5
+                left = Vec2(-current_direction.y, current_direction.x)
+                circle_center = ps_position + RADIUS * left
+                self.add_lines([
+                    f"{circle_center.x} {circle_center.y} {RADIUS} {prev_angle} {curr_angle} arc"
+                ])
+            else:
+                # TODO
+                self.add_lines([
+                    f"{ps_position.x} {ps_position.y} moveto"
+                ])
+        self.add_lines([
+            "stroke"
+        ])
+            
+
 
         dots = path.Path()
         for vertex in vertices:
