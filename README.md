@@ -37,7 +37,27 @@ artworks
 Examples marked with :test_tube: indicate artistic experiments by messing
 with the parameters in ways I didn't originally intend.
 
-### Hex Grid (2022-06)
+<!-- Edge Direction Tiling 2022-09-03 -->
+
+<!-- Colored Braids 2022-08-23 -->
+
+<!-- Iso Grid 2022-07-24 -->
+
+<!-- Braids 2022-07-24 -->
+
+<!-- Elementary Cellular Automaton 2022-07-09 -->
+
+<!-- Code 128 Barcodes 2022-07-03 -->
+
+<!-- Turtle Dances 2022-06 -->
+
+<!-- Quiet Dice 2022-06-20 -->
+
+<!-- Hitomezashi 2022-06-17 -->
+
+<!-- FM Ring 2022-06-15 -->
+
+### Hex Grid (2022-06-15)
 
 Hex grid with some optional gaps between hexagons. It also can render dots
 instead of lines.
@@ -62,7 +82,7 @@ This artwork only supports a single card-length receipt
 | ![Experiment: overlap](figures/hex_grid_overlap.png) | `main.py hex_grid -e 0.8` | :test_tube: Decrease the expand factor to make the hexagons overlap for neat effect |
 | ![Experiment: contracted dots](figures/hex_grid_contracted_dots.png) | `main.py hex_grid --dots -e 0.8` | :test_tube: Turn on dots, but also contract the hexagons like the overlap case |
 
-### Grid (2022-06)
+### Grid (2022-06-15)
 
 This was a warm-up exercise, this makes a card with graph paper.
 
