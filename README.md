@@ -214,17 +214,36 @@ and prints them out in a table.
 
 ### Hitomezashi (2022-06-17)
 
-DESCRIPTION
+This artwork is based on Hitomezashi embroidery patterns, inspired by
+[this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY). Hitomezashi
+is a form of [Sashiko embroidery](https://en.wikipedia.org/wiki/Sashiko),
+decorative running stitch patterns that help reinforce clothing.
+
+This script lets you specify two integers to set the bit pattern for the
+rows and columns (see the video to see how this works). Large numbers with
+a variety of 1s and 0s work best.
 
 **Parameters:**
 
 | Parameter | Description |
 |---|---|
+| `ROW_BITS` | An integer representing the bits for the rows (least significant bit first). It can be a decimal number or a binary number prefixed with `0b`. Rows are numbered from bottom to top of the document. |
+| `COL_BITS` | An integer representing the bits for the columns (least significant bit first). It can be a decimal number or a binary number prefixed with `0b`. Columns are numbered from left to right. |
+| `-o/--odd-even` | If true, the pattern is filled with an odd/even coloring. |
+| `-s/--square-size` | Size of each square in inches. Defaults to a quarter of an inch |
 
 **Examples:**
 
 | Example | Command | Description |
 |---|---|---|
+| ![hitomezashi: simplest example](figures/hitomezashi_simplest.png) | `main.py hitomezashi 0 0` | The simplest possible example. Since all the bits are zero, you get a repeated pattern of squares. Note that the bottom left corner has a stitch in both directions
+| ![hitomezashi: shift some columns](figures/hitomezashi_shift_columns.png) | `main.py hitomezashi 0 0b1111000` | Since bits are read LSB-first, this shifts columns 3, 4, 5, and 6 |
+| ![hitomezashi: shift rows and columns](figures/hitomezashi_shift_both.png) | `main.py hitomezashi 123456 101010` | Here I'm just typing patterns in decimal, the actual binary strings are different |
+| ![hitomezashi: odd-even coloring](figures/hitomezashi_odd_even.png) | `main.py hitomezashi -o 123456 101010` | Same as the previous example, but with odd-even coloring turned on |
+| ![hitomezashi: dense grid](figures/hitomezashi_dense.png) | `main.py hitomezashi -s 0.125 12345678910 0b11001100110011001100` | Set the square size smaller. Note that I needed to use larger numbers to have enough bits | 
+| ![hitomezashi: dice-generated experiment](figures/hitomezashi_dice.png) | `main.py hitomezashi -s 0.125 -o 465665232252 252232566564| :test_tube: I rolled 12d6 to pick the digits, but entered it in reverse order for the columns |
+| ![hitomezashi: bit pattern experiment](figures/hitomezashi_bit_patterns.png) | `main.py hitomezashi -o -s 0.125 0b10110111011110111110111110 0b010010101111010100100` | :test_tube: The digits for the rows are 10, 110, 1110, 11110 concatenated. The column digits are a pattern with mirror symmetry. |
+| ![hitomezashi: stripes](figures/hitomezashi_stripes.png) | `main.py hitomezashi -o 0b10101010101010101010 0b010101010101` | :test_tube: alternating bits produces a stair-step pattern. Changing the final bit reverses the pattern in each direction | 
 
 ### FM Ring (2022-06-15)
 

@@ -25,6 +25,7 @@ class Hitomezashi(receipts.Receipt):
             help="One bit per column of the grid. 0b notation is allowed."
         )
         subparser.add_argument(
+            "-o",
             "--odd-even",
             action="store_true",
             help="If true, fill in with an odd/even coloring"
