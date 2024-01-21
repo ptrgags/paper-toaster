@@ -103,17 +103,28 @@ DESCRIPTION
 
 ### Iso Grid (2022-07-24)
 
-DESCRIPTION
+I've always liked the look of isometric grids in video games and art, so this
+artwork makes a mountain-like scene on an isometric grid.
+
+The scene is an illusion. I'm just overlaying a bunch of solid-color
+parallelograms from back to front to make the scene. This is somewhat inspired
+by 2D tile-based iso rendering, but much simpler to implement. Of course, it
+only works well for this carefully curated scene.
+
+To make the mountain shape, I randomly generate heights in each cell such that
+a cell is equal or taller than any of its neighbors closer to the "camera".
 
 **Parameters:**
 
-| Parameter | Description |
-|---|---|
+This script generates a random isometric scene each time. There are no
+parameters.
 
 **Examples:**
 
-| Example | Command | Description |
-|---|---|---|
+| Example | Command |
+|---|---|
+| ![Iso grid example 1](figures/iso_grid_example1.png) | `main.py iso_grid` |
+| ![Iso grid example 2](figures/iso_grid_example2.png) | `main.py iso_grid` |
 
 ### Braids (2022-07-24)
 
@@ -287,9 +298,6 @@ This was a warm-up exercise, this makes a card with graph paper.
     `A` and `B` for modular arithmetic. This is a generalization of
     ["Let the Numbers Do the Walking:
 Generating Turtle Dances on the Plane from Integer Sequences"](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)
-* `quiet_dice -- <n> <sides> [-m <modifier>]` - rolls the give dice expression
-    `<n>d<s> + <modifier>` many times and prints a table of results. Perfect for
-    when there are no dice available or rolling dice would be to noisy.
 
 -->
 
