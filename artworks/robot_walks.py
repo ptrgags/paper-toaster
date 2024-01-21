@@ -35,6 +35,8 @@ class RobotWalks(receipts.Receipt):
                 self.commands += ["R"] * N
         random.shuffle(self.commands)
     
+        self.commands = ["L", "R", "L", "L", "R", "L", "L", "L"]
+    
     def generate_path(self):
         """
         Iterate over the list of L and R commands
@@ -118,7 +120,7 @@ class RobotWalks(receipts.Receipt):
             else:
                 # TODO
                 self.add_lines([
-                    f"{ps_position.x} {ps_position.y} moveto"
+                    f"{ps_position.x} {ps_position.y} lineto"
                 ])
         self.add_lines([
             "stroke"
