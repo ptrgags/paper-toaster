@@ -70,5 +70,8 @@ class QuietDice(receipts.Receipt):
                 self.draw_text(Vec2(x, y), result_str)
         
         self.set_font("Courier-Bold", TITLE_SIZE)
-        title = f"{self.n}d{self.sides} + {self.modifier}"
+        if self.modifier == 0:
+            title = f"{self.n}d{self.sides}"
+        else:
+            title = f"{self.n}d{self.sides} + {self.modifier}"
         self.draw_text(Vec2(0, self.title_y), title)
