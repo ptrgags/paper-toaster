@@ -88,17 +88,29 @@ DESCRIPTION
 
 ### Edge Direction Tiling (2022-09-03)
 
-DESCRIPTION
+This tiling was an artistic way of visualizing flow in a grid.
+
+First, a grid of cells is created. Then, for each edge between cells, a
+direction across the edge is chosen randomly. Then, for each cell, based
+on which directions the flow in/out of the tile is going, one of several
+tiles is chosen. 
+
+Randomly placing the tiles would be an easier implementation, but this method
+ensures that if you follow any path from a source (closed circle) to a sink
+(open circle), the flow direction will look consistent.
 
 **Parameters:**
 
 | Parameter | Description |
 |---|---|
+| `-s/--square-size SQUARE_SIZE` | The size of each grid square. Defaults to 1/4 inch |
 
 **Examples:**
 
 | Example | Command | Description |
 |---|---|---|
+| ![Edge direction tiling](figures/edge_directions_simple.png) | `main.py edge_directions` | Simple example |
+| ![Edge direction tiling with smaller squares](figures/edge_directions_dense.png) | `main.py edge_directions -s 0.125` | Set the square size to 1/8 of an inch |
 
 ### Colored Braids (2022-08-23)
 
@@ -315,12 +327,6 @@ This was a warm-up exercise, this makes a card with graph paper.
 | ![1/8 inch grid](figures/grid_eighth.png) | `python main.py grid -s 0.125` | finer 1/8 inch grid |
 
 <!--
-
-* `hitomezashi -- [options] <row_bits> <col_bits>` - Prints hitemozashi stitching
-    patterns (inspired by [this Numberphile video](https://www.youtube.com/watch?v=JbfhzlMk2eY))
-    `row_bits` and `col_bits` are any integer or `0bxxxxx` binary number. Each
-    row/column of the grid will use one bit from the respective number. To get
-    good variation, pick numbers with many bits set.
 * `fm_ring` - prints a generative art using frequency modulation and parametric
     equations.
 * `barcode_code128 <text>` - Encodes text as a
