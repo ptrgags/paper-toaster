@@ -1,8 +1,21 @@
 # Paper Toaster (Thermal Receipt Printer Art) (2022, 2023, 2024)
 
+![Banner generated from the Hitomezashi artwork](figures/banner.png)
+
+<!-- (Banner generated with this command:)
+```
+python main.py --num-cards 3 --landscape hitomezashi -o -s 0.125 6121365253313453 644235452426624254532446
+```
+-->
+
 This repo is for generative art with PostScript output that can be printed
 to standard 3 1/8 inch (80 mm) thermal receipt paper. I personally use [this 
-Rongta point-of-sale (POS) printer](https://www.amazon.com/gp/product/B08V4H7T47/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) to print my artwork.
+Rongta point-of-sale (POS) printer](https://www.amazon.com/gp/product/B08V4H7T47/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) to print my artwork. For example,
+here is the same banner above printed out:
+
+<div style="text-align: center;">
+    <img alt="Banner, printed" src="figures/banner_printed.jpg" style="width:500px;" />
+</div>
 
 I like to make my art at art trading card size (2.5 x 3.5 in), so this code is
 designed around that. This size is conveniently just a little bit narrower
