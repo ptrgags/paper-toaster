@@ -114,12 +114,17 @@ ensures that if you follow any path from a source (closed circle) to a sink
 
 ### Colored Braids (2022-08-23)
 
-DESCRIPTION
+A colorized version of the older `braids` tiling
 
 **Parameters:**
 
 | Parameter | Description |
 |---|---|
+| `-s/--square-size SQUARE_SIZE` | The size of each grid square. Defaults to 1/4 inch |
+| `-w/--stroke-width WIDTH_POINTS` | The width of a single strand in points (1/72 of an inch) |
+| `-c/--swap-chance CHANCE` | The chance of swapping a braid strand with its neighbor as a number between 0.0 and 1.0 |
+| `-i/--invert-colors` | Invert the colors so the braids stand out |
+| `-g/--groups GROUPS_CSV` | CSV of positive integers the determines groups of strands to weave. E.g. `3,4` means weave the first 3 strands, and the next 4 strands separately. If not specified, all strands are woven. |
 
 **Examples:**
 
@@ -153,17 +158,22 @@ parameters.
 
 ### Braids (2022-07-24)
 
-DESCRIPTION
+A pattern of strands of rope being woven together in a braid pattern.
+The crossings are randomly chosen.
 
 **Parameters:**
 
 | Parameter | Description |
 |---|---|
+| `-s/--square-size SQUARE_SIZE` | The size of each grid square. Defaults to 1/4 inch |
+| `-i/--invert-colors` | If true, invert the color scheme |
 
 **Examples:**
 
 | Example | Command | Description |
 |---|---|---|
+| ![Default braids](figures/braids_default.png) | `main.py braids` | Default settings |
+| ![Inverted braids](figures/braids_inverted.png) | `main.py braids -i` | Inverted colors |
 
 ### Elementary Cellular Automaton (2022-07-09)
 
