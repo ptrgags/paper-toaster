@@ -221,3 +221,4 @@ public. This includes:
 2. Add more screenshots to the README
 3. Added a banner and more information about the project
 4. Centered Code 128 barcodes on the page, since it didn't look right
+5. Removed FM Ring, as I wasn't happy with the design, and the script has broken

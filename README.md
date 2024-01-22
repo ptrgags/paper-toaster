@@ -310,20 +310,6 @@ a variety of 1s and 0s work best.
 | ![hitomezashi: bit pattern experiment](figures/hitomezashi_bit_patterns.png) | `main.py hitomezashi -o -s 0.125 0b10110111011110111110111110 0b010010101111010100100` | :test_tube: The digits for the rows are 10, 110, 1110, 11110 concatenated. The column digits are a pattern with mirror symmetry. |
 | ![hitomezashi: stripes](figures/hitomezashi_stripes.png) | `main.py hitomezashi -o 0b10101010101010101010 0b010101010101` | :test_tube: alternating bits produces a stair-step pattern. Changing the final bit reverses the pattern in each direction | 
 
-### FM Ring (2022-06-15)
-
-DESCRIPTION
-
-**Parameters:**
-
-| Parameter | Description |
-|---|---|
-
-**Examples:**
-
-| Example | Command | Description |
-|---|---|---|
-
 ### Hex Grid (2022-06-15)
 
 Hex grid with some optional gaps between hexagons. It also can render dots
