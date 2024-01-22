@@ -306,7 +306,7 @@ a variety of 1s and 0s work best.
 | ![hitomezashi: shift rows and columns](figures/hitomezashi_shift_both.png) | `main.py hitomezashi 123456 101010` | Here I'm just typing patterns in decimal, the actual binary strings are different |
 | ![hitomezashi: odd-even coloring](figures/hitomezashi_odd_even.png) | `main.py hitomezashi -o 123456 101010` | Same as the previous example, but with odd-even coloring turned on |
 | ![hitomezashi: dense grid](figures/hitomezashi_dense.png) | `main.py hitomezashi -s 0.125 12345678910 0b11001100110011001100` | Set the square size smaller. Note that I needed to use larger numbers to have enough bits | 
-| ![hitomezashi: dice-generated experiment](figures/hitomezashi_dice.png) | `main.py hitomezashi -s 0.125 -o 465665232252 252232566564| :test_tube: I rolled 12d6 to pick the digits, but entered it in reverse order for the columns |
+| ![hitomezashi: dice-generated experiment](figures/hitomezashi_dice.png) | `main.py hitomezashi -s 0.125 -o 465665232252 252232566564` | :test_tube: I rolled 12d6 to pick the digits, but entered it in reverse order for the columns |
 | ![hitomezashi: bit pattern experiment](figures/hitomezashi_bit_patterns.png) | `main.py hitomezashi -o -s 0.125 0b10110111011110111110111110 0b010010101111010100100` | :test_tube: The digits for the rows are 10, 110, 1110, 11110 concatenated. The column digits are a pattern with mirror symmetry. |
 | ![hitomezashi: stripes](figures/hitomezashi_stripes.png) | `main.py hitomezashi -o 0b10101010101010101010 0b010101010101` | :test_tube: alternating bits produces a stair-step pattern. Changing the final bit reverses the pattern in each direction | 
 
