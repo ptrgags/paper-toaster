@@ -1,4 +1,4 @@
-# Paper Toaster (Thermal Receipt Printer Art) (2022, 2023, 2024)
+# Paper Toaster (Thermal Receipt Printer Art) (2022-2024)
 
 ![Banner generated from the Hitomezashi artwork](figures/banner.png)
 
