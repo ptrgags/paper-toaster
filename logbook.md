@@ -214,8 +214,8 @@ Today I worked on a few different things to clean up this repo:
 
 ## 2024-01-22 Making the Repo Public
 
-I'm trying to finish cleaning up this repository so I can make the repository
-public. This includes:
+The past couple days I've been cleaning up this repo so I can finally feel
+ready to make it public! This includes:
 
 1. Documenting parameters for each artwork in the README
 2. Add more screenshots to the README
