@@ -199,11 +199,21 @@ class Code128:
         return bars
 
 
-    def draw(self, start_x, start_y, text):
+    def draw(self, start_x, start_y, page_width, page_height, text):
         bars = self.encode(text)
-        print(bars)
 
-        return self.barcode.draw(start_x, start_y, bars)
+        # Center the barcode on the page as best as possible
+        # sometimes the text is too long, especially in portrait orientation.
+        barcode_width = len(bars) * self.barcode.module_width
+        barcode_height = self.barcode.module_height
+
+        margin_x = max(page_width - barcode_width, 0)
+        margin_y = max(page_height - barcode_height, 0)
+
+        offset_x = start_x + margin_x / 2
+        offset_y = start_y + margin_y / 2
+
+        return self.barcode.draw(offset_x, offset_y, bars)
             
         
 
