@@ -123,7 +123,8 @@ ensures that if you follow any path from a source (closed circle) to a sink
 
 ### Colored Braids (2022-08-23)
 
-A colorized version of the older `braids` tiling
+A colorized version of the older `braids` tiling. Obviously, this looks better
+on a screen or a color printer rather than the grayscale of a receipt printer.
 
 **Parameters:**
 
@@ -133,12 +134,16 @@ A colorized version of the older `braids` tiling
 | `-w/--stroke-width WIDTH_POINTS` | The width of a single strand in points (1/72 of an inch) |
 | `-c/--swap-chance CHANCE` | The chance of swapping a braid strand with its neighbor as a number between 0.0 and 1.0 |
 | `-i/--invert-colors` | Invert the colors so the braids stand out |
-| `-g/--groups GROUPS_CSV` | CSV of positive integers the determines groups of strands to weave. E.g. `3,4` means weave the first 3 strands, and the next 4 strands separately. If not specified, all strands are woven. |
+| `-g/--groups GROUPS_CSV` | CSV of positive integers the determines groups of strands to weave. E.g. `3,4` means weave the first 3 strands, and the next 4 strands separately. If not specified, all strands are woven. If there are not enough groups to |
 
 **Examples:**
 
 | Example | Command | Description |
 |---|---|---|
+| ![Colored braids default settings](figures/colored_braids_default.png) | `main.py colored_braids` | Default settings |
+| ![Colored braids inverted](figures/colored_braids_inverted.png) | `main.py colored_braids -i` | Inverted colors help the braids stand out |
+| ![Colored braids weave everything](figures/colored_braids_weave_always.png)| `main.py colored_braids -i -c 1.0` | Force the braid to make every possible crossing |
+| ![Colored braids with grouped strands](figures/colored_braids_groups.png) | `main.py colored_braids -i -g 3,2` | Group stands into groups of 3 and groups of 2. |
 
 ### Iso Grid (2022-07-24)
 
@@ -235,17 +240,32 @@ camera to scan it, but sometimes third-party apps are necessary.
 
 ### Turtle Dances (2022-06)
 
-DESCRIPTION
+[Turtle graphics](https://en.wikipedia.org/wiki/Turtle_graphics) patterns based on the Bridges math art paper ["Let the Numbers Do the Walking: Generating Turtle Dances on the Plane from Integer Sequences"](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)
+
+This implementation allows using different sequences of integers:
+
+* The natural numbers
+* The square numbers
+* The triangle numbers
+* The fibonnaci sequence
 
 **Parameters:**
 
 | Parameter | Description |
 |---|---|
+| `SEQUENCE` | One of `natural`, `square`, `triangle`, `fibonacci` |
+| `A` | The first integer modulus |
+| `B` | The second integer modulus |
+| `-d/--divisions` | A divisor of 360 degrees used to determine the minimum turn angle. |
+| `-f/--fill` | If set, the path will be filled with odd/even fill |
 
 **Examples:**
 
 | Example | Command | Description |
 |---|---|---|
+| ![Simple turtle dance example](figures/turtle_dance_natural_70_80.png) | `main.py turtle_dance natural 70 80` | Basic example
+| ![Turtle dance using square numbers and 1/12 turns](figures/turtle_dance_square_360_46_divisions_12.png) | `main.py turtle_dance square 360 46 --divisions 12` | Example where the minimum turn angle is 1/12 of a turn |
+| ![Turtle dance using fibonacci numbers and odd-even fill](figures/turtle_dance_fib_90_45_fill.png) | `main.py turtle_dance fibonacci 90 45 --fill` | Example of odd/even filling |
 
 ### Quiet Dice (2022-06-20)
 
@@ -351,17 +371,4 @@ This was a warm-up exercise, this makes a card with graph paper.
 | --- | --- | --- | 
 | ![Default grid](figures/grid_default.png) | `python main.py grid` | Default settings (1/4 inch grid when printed)
 | ![1/8 inch grid](figures/grid_eighth.png) | `python main.py grid -s 0.125` | finer 1/8 inch grid |
-
-<!--
-* `fm_ring` - prints a generative art using frequency modulation and parametric
-    equations.
-* `barcode_code128 <text>` - Encodes text as a
-    [Code 128](https://en.wikipedia.org/wiki/Code_128) barcode.
-* `turtle_dance [options] {natural,square,triangle,fibonacci} A B` - Generates
-    patterns with turtle graphics taking a sequence of numbers and two integers
-    `A` and `B` for modular arithmetic. This is a generalization of
-    ["Let the Numbers Do the Walking:
-Generating Turtle Dances on the Plane from Integer Sequences"](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)
-
--->
 
