@@ -95,6 +95,26 @@ DESCRIPTION
 
 -->
 
+### To Do List (2023-01-28)
+
+This receipt is more of a utility than an artwork. It simply draws a to do
+list template with checkboxes that you can print out and write on. It's also
+nice for a shopping list!
+
+**Parameters:**
+
+| Parameter | Description |
+|---|---|
+| `-s/--row-size` | Size of a row in inches (including padding). Defaults to 1/4 inch |
+
+**Examples:**
+
+| Example | Command | Description |
+|---|---|---|
+| ![Default to do list](figures/todo_default.png) | `main.py todo` | Default settings
+
+
+
 ### Edge Direction Tiling (2022-09-03)
 
 This tiling was an artistic way of visualizing flow in a grid.
