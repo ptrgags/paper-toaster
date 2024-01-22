@@ -57,6 +57,15 @@ configurations, such as one trading-card sized page.
 | `--page-height HEIGHT_INCHES` | Override the height of the page to be any size in inches |
 | `--landscape` | Make the ouput document landscape rather than portrait |
 
+## Logbook
+
+As with many of my projects, I keep a log of what I worked on over time. This
+includes notes, experiments, links to resources I used along the way, etc.
+
+You can find it here:
+
+[Logbook](logbook.md)
+
 ## Artworks
 
 The sections below give a summary of the different artworks and explain the
@@ -177,31 +186,52 @@ The crossings are randomly chosen.
 
 ### Elementary Cellular Automaton (2022-07-09)
 
-DESCRIPTION
+This script is a simple implementation of an [elementary cellular automaton](https://mathworld.wolfram.com/ElementaryCellularAutomaton.html).
+
+There are a few differences from the description on Wolfram Mathworld:
+
+1. Instead of starting from a single seed point, the first row is randomly generated
+2. When examining neighbors, this script wraps around the boundary
+3. The pattern is generated from bottom to top given PostScript's coordinate system
 
 **Parameters:**
 
 | Parameter | Description |
 |---|---|
+| `RULE` | The rule number from 0 to 255 |
 
 **Examples:**
 
 | Example | Command | Description |
 |---|---|---|
+| ![Elementary CA Rule 30](figures/elementary_ca_30.png) | `main.py elementary_ca 30` | Rule 30. This pattern is chaotic and is like a simplified model for the patterns on sea snail shells (see [_Olivia porphria_](https://en.wikipedia.org/wiki/Oliva_porphyria)) |
+| ![Elementary CA Rule 112](figures/elementary_ca_112.png) | `main.py elementary_ca 112` | Rule 112 |
+| ![Elementary CA Rule 161](figures/elementary_ca_161.png) | `main.py elementary_ca 161` | Rule 161 |
 
 ### Code 128 Barcodes (2022-07-03)
 
-DESCRIPTION
+Barcodes are ubiquitous, but I didn't know much about how they encode data.
+So I tried implementing [Code 128 barcodes](https://en.wikipedia.org/wiki/Code_128)
+since these can store not just numbers but ASCII characters too.
+
+This receipt works best with the `--landscape` global option, and for longer
+strings of text, increasing the `--num-cards` is necessary.
+
+Also note that barcodes are easier to scan on paper than on a screen, and
+it works best when the barcode is flat. I'm able to use my Android phone's
+camera to scan it, but sometimes third-party apps are necessary.
 
 **Parameters:**
 
 | Parameter | Description |
 |---|---|
+| `TEXT` | An ASCII string to turn into a barcode |
 
 **Examples:**
 
 | Example | Command | Description |
 |---|---|---|
+| ![Example that encodes "Paper Toaster"](figures/barcode128_example.png) | `main.py --landscape barcode128 "Paper Toaster"` | Simple example that encodes the text "Paper Toaster" |
 
 ### Turtle Dances (2022-06)
 
@@ -349,9 +379,3 @@ Generating Turtle Dances on the Plane from Integer Sequences"](https://archive.b
 
 -->
 
-## Logbook
-
-This project is a bunch of artistic experiments. As I went, I kept a log
-of what I worked on and more context. You can find it here:
-
-[Logbook](logbook.md)

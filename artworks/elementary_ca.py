@@ -1,4 +1,3 @@
-import argparse
 import random
 
 from postscriptlib import receipts

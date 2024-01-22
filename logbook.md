@@ -211,3 +211,13 @@ Today I worked on a few different things to clean up this repo:
     PNG images for displaying in the README and eventually on my website.
 3. I started adding screenshots and more detailed documentation to the README.
     This may take a few more sittings to finish.
+
+## 2024-01-22 Making the Repo Public
+
+I'm trying to finish cleaning up this repository so I can make the repository
+public. This includes:
+
+1. Documenting parameters for each artwork in the README
+2. Add more screenshots to the README
+3. Added a banner and more information about the project
+4. Centered Code 128 barcodes on the page, since it didn't look right
