@@ -258,7 +258,7 @@ camera to scan it, but sometimes third-party apps are necessary.
 |---|---|---|
 | ![Example that encodes "Paper Toaster"](figures/barcode128_example.png) | `main.py --landscape barcode128 "Paper Toaster"` | Simple example that encodes the text "Paper Toaster" |
 
-### Turtle Dances (2022-06)
+### Turtle Dances (2022-06-27)
 
 [Turtle graphics](https://en.wikipedia.org/wiki/Turtle_graphics) patterns based on the Bridges math art paper ["Let the Numbers Do the Walking: Generating Turtle Dances on the Plane from Integer Sequences"](https://archive.bridgesmathart.org/2017/bridges2017-139.pdf)
 
