@@ -225,6 +225,26 @@ class RobotWalks(receipts.Receipt):
             action='store_true',
             help="If set, the script will keep trying until it finds a path that loops."
         )
+        subparser.add_argument(
+            '-d',
+            '--dots',
+            action='store_true',
+            help="if set, draw a dot at each position on the robot's path."
+        )
+        subparser.add_argument(
+            '-p',
+            '--path-type',
+            choices=['arc', 'polyline'],
+            default='arc',
+            help="Choose between arc and polyline"
+        )
+        subparser.add_argument(
+            '-r',
+            '--render-type',
+            choices=['stroke', 'fill', 'eofill'],
+            default='stroke',
+            help="Choose how to render the path as a stroke, fill or even-odd fill"
+        )
 
     def draw(self):
         if self.args.loop:
@@ -252,11 +272,23 @@ class RobotWalks(receipts.Receipt):
             f'{-centroid.x} {-centroid.y} translate',
         ])
 
-        self.add_lines(["newpath"])
-        self.add_lines([str(arc) for arc in arcs])
-        self.add_lines(["stroke"])
+        fill_command = self.args.render_type
 
-        dots = path.Path()
-        for vertex in vertices:
-            dots.circle(vertex, DOT_RADIUS)
-        self.add_path(dots)
+        if self.args.path_type == 'arc':
+            self.add_lines(["newpath"])
+            self.add_lines([str(arc) for arc in arcs])
+            self.add_lines([fill_command])
+        else:
+            # polyline
+            self.add_lines(["newpath"])
+            polyline = path.Path()
+            polyline.polygon(vertices)
+            self.add_path(polyline)
+            self.add_lines([fill_command])
+
+        if self.args.dots:
+            # Draw a dot at each vertex
+            dots = path.Path()
+            for vertex in vertices:
+                dots.circle(vertex, DOT_RADIUS)
+            self.add_path(dots)
