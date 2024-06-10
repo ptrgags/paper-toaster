@@ -238,6 +238,9 @@ class RobotWalks(receipts.Receipt):
         # extra translate command.
         centroid = (1.0 / len(vertices)) * sum(vertices, start=Vec2(0.0, 0.0))
 
+        # Outline the page before we adjust the coordinate system.
+        self.outline_page()
+
         self.add_lines([
             f"{self.width / 2} {self.height / 2} translate",
             # Scale the coordinates to something more reasonable
