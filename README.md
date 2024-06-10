@@ -56,11 +56,11 @@ E.g. `main.py --seed 100 robot_walks` works, but not
 
 | Option | Description |
 | --- | --- |
-| `--num-cards N` | How many 2.5x3.5 inch trading cards tall will the receipt be. For example, I sometimes print receipts that are 3 cards tall|
-| `--page-width WIDTH_INCHES` | Override the width of the page to be any size in inches |
-| `--page-height HEIGHT_INCHES` | Override the height of the page to be any size in inches |
-| `--landscape` | Make the ouput document landscape rather than portrait |
-| `--seed SEED` | If provided, random.seed() will be called with this value to make the results reproducible. Otherwise, a seed will be chosen automatically and printed to the console |
+| `--num-cards N` | How many 2.5x3.5 inch trading cards tall will the receipt be. For example, I sometimes print receipts that are 3 cards tall. |
+| `--page-width WIDTH_INCHES` | Override the width of the page to be any size in inches. |
+| `--page-height HEIGHT_INCHES` | Override the height of the page to be any size in inches. |
+| `--landscape` | Make the ouput document landscape rather than portrait. |
+| `--seed SEED` | If provided, random.seed() will be called with this value to make the results reproducible. Otherwise, a seed will be chosen automatically and printed to the console. |
 
 ## Logbook
 
@@ -111,7 +111,7 @@ does visualize some of the paths. This script produces two types of paths:
 1. Looping paths with 5-fold symmetry (most of the time)
 2. Infinitely repeating paths (sometimes)
 
-There are more possibilities, but these ones have more symmetry
+There are more possibilities, but these ones have more symmetry.
 
 **Parameters:**
 
@@ -133,9 +133,9 @@ There are more possibilities, but these ones have more symmetry
 | ![Infinite Path](figures/robot_walks_infinite.png)| `main.py robot_walks -n 100` | Make the robot path much longer. Note that this path didn't loop. | 3766 |
 | ![Polyline](figures/robot_walks_polyline.png) | `main.py robot_walks -p polyline` | Use polylines to give a different appearance. | 8916 |
 | ![Even-odd fill](figures/robot_walks_eofill.png) | `main.py robot_walks -r eofill` | Use even-odd fill. | 8790 |
-| ![Pentaflake](figures/robot_walks_pentaflake.png) | `main.py robot_walks -n 30 -p polyline -r eofill` | :test_tube: Combining several options | 9762 |
-| ![Lumpy Starfish](figures/robot_walks_lumpy_starfish.png) | `main.py robot_walks -n 30 -r eofill` | :test_tube: Another mix of parameters | 9866 |
-| ![Rorschach](figures/robot_walks_rorschach.png) | `main.py robot_walks -n 100 -r eofill` | :test_tube: Same seed as the previous example, but different settings |9866 |
+| ![Pentaflake](figures/robot_walks_pentaflake.png) | `main.py robot_walks -n 30 -p polyline -r eofill` | :test_tube: Combining several options. | 9762 |
+| ![Lumpy Starfish](figures/robot_walks_lumpy_starfish.png) | `main.py robot_walks -n 30 -r eofill` | :test_tube: Another mix of parameters. | 9866 |
+| ![Rorschach](figures/robot_walks_rorschach.png) | `main.py robot_walks -n 100 -r eofill` | :test_tube: Same seed as the previous example, but different settings. | 9866 |
 
 ### To Do List (2023-01-28)
 
@@ -194,7 +194,7 @@ on a screen or a color printer rather than the grayscale of a receipt printer.
 | `-w/--stroke-width WIDTH_POINTS` | The width of a single strand in points (1/72 of an inch) |
 | `-c/--swap-chance CHANCE` | The chance of swapping a braid strand with its neighbor as a number between 0.0 and 1.0 |
 | `-i/--invert-colors` | Invert the colors so the braids stand out |
-| `-g/--groups GROUPS_CSV` | CSV of positive integers the determines groups of strands to weave. E.g. `3,4` means weave the first 3 strands, and the next 4 strands separately. If not specified, all strands are woven. If there are not enough groups to |
+| `-g/--groups GROUPS_CSV` | CSV of positive integers the determines groups of strands to weave. E.g. `3,4` means weave the first 3 strands, and the next 4 strands separately. If not specified, all strands are woven. If there are not enough groups for the number of strands, the list of groups will be repeated |
 
 **Examples:**
 
