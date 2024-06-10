@@ -12,11 +12,13 @@ look cool.
 from postscriptlib import receipts, path
 from postscriptlib.vec2 import Vec2
 
-# The fifth roots of unity are useful here
+# We're only concerned with 1/5 turns
 N = 5
 TAU = 2.0 * math.pi
 TAU_DEGREES = 360
 FIFTH_TURN_DEGREES = TAU_DEGREES / N
+
+# The fifth roots of unity are useful here
 ROOTS = [
     Vec2.direction_vec(TAU * i / N)
     for i in range(N)
@@ -34,7 +36,9 @@ OFFSET_MAGNITUDE = abs(OFFSETS[0])
 
 PATH_LENGTH = 3
 
-RADIUS = 0.25
+UNIT_LENGTH = 0.15
+DOT_RADIUS = 0.1
+LINE_WIDTH = 0.05
 
 
 class RobotCommand:
@@ -75,6 +79,23 @@ class RobotCommand:
     @classmethod
     def left(cls):
         return RobotCommand([1, 0, 0, 0, 0], 1, 'L')
+
+    @classmethod
+    def is_loop(cls, commands):
+        current = cls.identity()
+        for command in commands:
+            current = command(current)
+
+        identity = cls.identity()
+
+        # The robot returns to the starting position if the counts of
+        # all five offsets are equal. This is because the sum of all fifth
+        # roots of unity is 0.
+        returns_to_start = all(
+            x == current.offset_counts[0] for x in current.offset_counts
+        )
+
+        return current.orientation == identity.orientation and returns_to_start
 
 
 R = RobotCommand.right()
@@ -119,94 +140,120 @@ def generate_commands(length):
     for _ in range(length):
         command = random.choice(choices)
         commands.append(command)
-    return commands
+
+    # Repeat the commands 5 times. If the path loops back on itself, it
+    # will do so after 5 times. The only other option is the path
+    # goes off to infinity.
+    return commands * 5
 
 
-SCALE = 0.1
+def generate_loop_commands(length):
+    """
+    Keep randomly generating loop commands until we find one.
+    """
+    attempts = 1
+    while True:
+        commands = generate_commands(length)
+        if RobotCommand.is_loop(commands):
+            print(f"Generating loop took {attempts} attempt(s)")
+            return commands
+        attempts += 1
+
+
+def generate_geometry(commands):
+    vertices = [Vec2(0.0, 0.0)]
+    arcs = []
+
+    robot_path = RobotCommand.identity()
+    for command in commands:
+        robot_path = command(robot_path)
+        vertex = robot_path.offset
+        vertices.append(vertex)
+
+        if command.label == 'L':
+            prev_orientation = (robot_path.orientation - 1) % N
+            offset = OFFSETS[prev_orientation]
+            left = offset.normalize().rot90()
+            center = (
+                vertex +
+                0.5 * -offset +
+                0.5 * OFFSET_MAGNITUDE * 1.0 / math.tan(TAU / 10) * left
+            )
+
+            arcs.append(RobotArc(
+                center,
+                prev_orientation,
+                robot_path.orientation,
+                False
+            ))
+
+        else:
+            prev_orientation = (robot_path.orientation + 1) % N
+            offset = OFFSETS[robot_path.orientation]
+            right = -(offset.normalize().rot90())
+            center = (
+                vertex +
+                0.5 * -offset +
+                0.5 * OFFSET_MAGNITUDE * 1.0 / math.tan(TAU / 10) * right
+            )
+
+            arcs.append(RobotArc(
+                center,
+                prev_orientation,
+                robot_path.orientation,
+                True
+            ))
+
+    return (vertices, arcs)
 
 
 class RobotWalks(receipts.Receipt):
     ARTWORK_ID = "robot_walks"
 
-    def setup(self):
-        # A list of L or R commands describing how the robot turns
-        self.commands = generate_commands(10) * 5
-
-        print([x.label for x in self.commands])
+    @classmethod
+    def add_arguments(cls, subparser):
+        subparser.add_argument(
+            '-n',
+            '--num-steps',
+            type=int,
+            default=10,
+            help="Length of the robot's base path in steps. The path will be repeated 5 times to increase the chances of it looping nicely."
+        )
+        subparser.add_argument(
+            '-l',
+            '--loop',
+            action='store_true',
+            help="If set, the script will keep trying until it finds a path that loops."
+        )
 
     def draw(self):
-        if self.args.seed:
-            random.seed(self.args.seed)
+        if self.args.loop:
+            commands = generate_loop_commands(self.args.num_steps)
+        else:
+            commands = generate_commands(self.args.num_steps)
 
-        vertices = [Vec2(0.0, 0.0)]
-        arcs = []
+        vertices, arcs = generate_geometry(commands)
 
-        robot_path = RobotCommand.identity()
-        for command in self.commands:
-            robot_path = command(robot_path)
-            vertex = robot_path.offset
-            vertices.append(vertex)
-
-            if command.label == 'L':
-                prev_orientation = (robot_path.orientation - 1) % N
-                offset = OFFSETS[prev_orientation]
-                left = offset.normalize().rot90()
-                center = (
-                    vertex +
-                    0.5 * -offset +
-                    0.5 * OFFSET_MAGNITUDE * 1.0 / math.tan(TAU / 10) * left
-                )
-
-                arcs.append(RobotArc(
-                    center,
-                    prev_orientation,
-                    robot_path.orientation,
-                    False
-                ))
-
-                # end_angle = robot_path.orientation * TAU_DEGREES / 5
-                # start_angle = prev_orientation * TAU_DEGREES / 5
-                # arcs.append((center, start_angle, end_angle, 'arc'))
-            else:
-                prev_orientation = (robot_path.orientation + 1) % N
-                offset = OFFSETS[robot_path.orientation]
-                right = -(offset.normalize().rot90())
-                center = (
-                    vertex +
-                    0.5 * -offset +
-                    0.5 * OFFSET_MAGNITUDE * 1.0 / math.tan(TAU / 10) * right
-                )
-
-                # end_angle = 180 - robot_path.orientation * TAU_DEGREES / 5
-                # start_angle = 180 - prev_orientation * TAU_DEGREES / 5
-                # arcn is weird and measures angles clockwise
-                # arcs.append((center, -start_angle, -end_angle, 'arcn'))
-                arcs.append(RobotArc(
-                    center,
-                    prev_orientation,
-                    robot_path.orientation,
-                    True
-                ))
+        # The path is usually off-center. We can fix this with an
+        # extra translate command.
+        centroid = (1.0 / len(vertices)) * sum(vertices, start=Vec2(0.0, 0.0))
 
         self.add_lines([
             f"{self.width / 2} {self.height / 2} translate",
-            f'{SCALE * self.PPI} {SCALE * self.PPI} scale',
-            "0.005 setlinewidth",
+            # Scale the coordinates to something more reasonable
+            f'{UNIT_LENGTH * self.PPI} {UNIT_LENGTH * self.PPI} scale',
+            f"{LINE_WIDTH} setlinewidth",
+
+            # Center the drawing. This has to be done after the scaling
+            # since the geometry assumes the arc radius is unit length.
+            f'{-centroid.x} {-centroid.y} translate',
         ])
 
         self.add_lines(["newpath"])
         self.add_lines([str(arc) for arc in arcs])
-
-        """
-        for center, start, end, arc_command in arcs:
-            print(center, start, end, arc_command)
-            self.add_lines([
-                f"{center.x} {center.y} 1 {start} {end} {arc_command}",
-            ])
-        """
         self.add_lines(["stroke"])
 
         dots = path.Path()
         for vertex in vertices:
-            dots.circle(vertex, 0.04)
+            dots.circle(vertex, DOT_RADIUS)
         self.add_path(dots)
