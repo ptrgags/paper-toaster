@@ -222,3 +222,9 @@ ready to make it public! This includes:
 3. Added a banner and more information about the project
 4. Centered Code 128 barcodes on the page, since it didn't look right
 5. Removed FM Ring, as I wasn't happy with the design, and the script has broken
+
+## 2024-06-10 Robot Walks
+
+Today I added a new artwork to the repo, Robot Walks. I also added some
+quality of life improvements like reducing command line output and allowing
+a `--seed` option to set the random seed for reproducibility.
