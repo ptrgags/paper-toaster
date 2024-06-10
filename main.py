@@ -33,7 +33,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--seed",
         type=int,
-        help="If provided, random.seed() will be called so random generation will be reproducible. If not provided, the generator will be seeded with the current Unix time in seconds"
+        help="If provided, random.seed() will be called so random generation will be reproducible. If not provided, the seed will be chosen automatically."
     )
     subparsers = parser.add_subparsers(dest='artwork')
 
@@ -47,8 +47,8 @@ if __name__ == "__main__":
     if args.seed is not None:
         random.seed(args.seed)
     else:
-        time_seed = int(time.time())
-        print(f"Seeding with current time: {time_seed}")
+        time_seed = int(time.time() % 10000)
+        print(f"Seeding with current time mod 10k: {time_seed}")
         random.seed(time_seed)
 
     # Receipt.add_subparser stores the class in the args
