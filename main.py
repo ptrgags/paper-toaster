@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import random
 
 from artworks import ARTWORKS
 
@@ -14,19 +15,24 @@ if __name__ == "__main__":
     parser.add_argument(
         "--page-width",
         type=float,
-        default=2.5, # width of an art trading card
+        default=2.5,  # width of an art trading card
         help="Width of a single page in inches"
     )
     parser.add_argument(
         "--page-height",
         type=float,
-        default=3.5, # height of an art trading card
+        default=3.5,  # height of an art trading card
         help="Height of a single page in inches"
     )
     parser.add_argument(
         "--landscape",
         action="store_true",
         help="If set, the pages will use landscape rather than portrait orientation"
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        help="If provided, random.seed() will be called so random generation will be reproducible"
     )
     subparsers = parser.add_subparsers(dest='artwork')
 
@@ -36,6 +42,9 @@ if __name__ == "__main__":
         artwork.add_subparser(subparsers)
 
     args = parser.parse_args()
+
+    if args.seed is not None:
+        random.seed(args.seed)
 
     # Receipt.add_subparser stores the class in the args
     try:
