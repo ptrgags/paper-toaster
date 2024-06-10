@@ -1,5 +1,6 @@
 import math
 
+
 class Vec2:
     def __init__(self, x, y):
         self.x = x
@@ -9,7 +10,7 @@ class Vec2:
         x = self.x + other.x
         y = self.y + other.y
         return Vec2(x, y)
-    
+
     def __sub__(self, other):
         x = self.x - other.x
         y = self.y - other.y
@@ -19,13 +20,13 @@ class Vec2:
         x = self.x * other.x
         y = self.y * other.y
         return Vec2(x, y)
-    
+
     def __neg__(self):
         return Vec2(-self.x, -self.y)
-    
+
     def __repr__(self):
         return f'Vec2({self.x, self.y})'
-    
+
     def __rmul__(self, scalar):
         """
         Scalar multiplication. Scalar goes on the left
@@ -33,7 +34,7 @@ class Vec2:
         x = self.x * scalar
         y = self.y * scalar
         return Vec2(x, y)
-    
+
     def __truediv__(self, other):
         x = self.x / other.x
         y = self.y / other.y
@@ -43,6 +44,13 @@ class Vec2:
         x = self.x
         y = self.y
         return math.sqrt(x * x + y * y)
+
+    def normalize(self):
+        r = abs(self)
+        return 1.0 / r * self
+
+    def rot90(self):
+        return Vec2(-self.y, self.x)
 
     @classmethod
     def direction_vec(cls, angle_radians):

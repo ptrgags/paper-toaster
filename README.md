@@ -50,12 +50,17 @@ There are a few options that can be used with any artwork to control the page
 size and layout. However, some artworks may be designed for specific
 configurations, such as one trading-card sized page.
 
+:warning: These options must go between `main.py` and the subcommand!
+E.g. `main.py --seed 100 robot_walks` works, but not
+`main.py robot_walks --seed 100`.
+
 | Option | Description |
 | --- | --- |
-| `--num-cards N` | How many 2.5x3.5 inch trading cards tall will the receipt be. For example, I often print receipts 
-| `--page-width WIDTH_INCHES` | Override the width of the page to be any size in inches |
-| `--page-height HEIGHT_INCHES` | Override the height of the page to be any size in inches |
-| `--landscape` | Make the ouput document landscape rather than portrait |
+| `--num-cards N` | How many 2.5x3.5 inch trading cards tall will the receipt be. For example, I sometimes print receipts that are 3 cards tall. |
+| `--page-width WIDTH_INCHES` | Override the width of the page to be any size in inches. |
+| `--page-height HEIGHT_INCHES` | Override the height of the page to be any size in inches. |
+| `--landscape` | Make the ouput document landscape rather than portrait. |
+| `--seed SEED` | If provided, random.seed() will be called with this value to make the results reproducible. Otherwise, a seed will be chosen automatically and printed to the console. |
 
 ## Logbook
 
@@ -70,10 +75,13 @@ You can find it here:
 
 The sections below give a summary of the different artworks and explain the
 parameters. They are listed in reverse chronological order to feature newest
-artworks
+artworks at the top.
 
 Examples marked with :test_tube: indicate artistic experiments by messing
 with the parameters in ways I didn't originally intend.
+
+Examples with a Seed column can be reproduced exactly using the `--seed N`
+global option to set the random seed.
 
 <!--
 
@@ -95,6 +103,40 @@ DESCRIPTION
 
 -->
 
+### Robot Walks (2024-06-10)
+
+This receipt creates patterns inspired by the Project Euler [problem #208: Robot Walks](https://projecteuler.net/problem=208). This script does not solve the puzzle, but it
+does visualize some of the paths. This script produces two types of paths:
+
+1. Looping paths with 5-fold symmetry (most of the time)
+2. Infinitely repeating paths (sometimes)
+
+There are more possibilities, but these ones have more symmetry.
+
+**Parameters:**
+
+| Parameter | Description |
+|---|---|
+| `-n/--num-steps N` | How many steps the robot will take. The path will be repeated 5 times as this usually causes the robot to loop back to the start. |
+| `-l/--loop` | If set, the script will keep trying until it finds a path that loops. |
+| `-d/--dots` | If set, draw a dot at each position on the robot's path. |
+| `-p/--path-type {arc, polyline}` | Select between curved arcs and straight polylines. |
+| `-r/--render-type {stroke,fill,eofill}` | Select between stroked, filled, or even-odd filled paths. |
+
+**Examples:**
+
+| Example | Command | Description | Seed |
+|---|---|---|---|
+| ![Basic example](figures/robot_walks.png) | `main.py robot_walks` | Generate a random pattern. | 9422 |
+| ![With dots](figures/robot_walks_dots.png)| `main.py robot_walks --dots` | Draw dots at each step. | 9308 |
+| ![Looping path](figures/robot_walks_loop.png) | `main.py robot_walks --loop` | Disallow infinite paths. | 9080 |
+| ![Infinite Path](figures/robot_walks_infinite.png)| `main.py robot_walks -n 100` | Make the robot path much longer. Note that this path didn't loop. | 3766 |
+| ![Polyline](figures/robot_walks_polyline.png) | `main.py robot_walks -p polyline` | Use polylines to give a different appearance. | 8916 |
+| ![Even-odd fill](figures/robot_walks_eofill.png) | `main.py robot_walks -r eofill` | Use even-odd fill. | 8790 |
+| ![Pentaflake](figures/robot_walks_pentaflake.png) | `main.py robot_walks -n 30 -p polyline -r eofill` | :test_tube: Combining several options. | 9762 |
+| ![Lumpy Starfish](figures/robot_walks_lumpy_starfish.png) | `main.py robot_walks -n 30 -r eofill` | :test_tube: Another mix of parameters. | 9866 |
+| ![Rorschach](figures/robot_walks_rorschach.png) | `main.py robot_walks -n 100 -r eofill` | :test_tube: Same seed as the previous example, but different settings. | 9866 |
+
 ### To Do List (2023-01-28)
 
 This receipt is more of a utility than an artwork. It simply draws a to do
@@ -112,8 +154,6 @@ nice for a shopping list!
 | Example | Command | Description |
 |---|---|---|
 | ![Default to do list](figures/todo_default.png) | `main.py todo` | Default settings
-
-
 
 ### Edge Direction Tiling (2022-09-03)
 
@@ -154,7 +194,7 @@ on a screen or a color printer rather than the grayscale of a receipt printer.
 | `-w/--stroke-width WIDTH_POINTS` | The width of a single strand in points (1/72 of an inch) |
 | `-c/--swap-chance CHANCE` | The chance of swapping a braid strand with its neighbor as a number between 0.0 and 1.0 |
 | `-i/--invert-colors` | Invert the colors so the braids stand out |
-| `-g/--groups GROUPS_CSV` | CSV of positive integers the determines groups of strands to weave. E.g. `3,4` means weave the first 3 strands, and the next 4 strands separately. If not specified, all strands are woven. If there are not enough groups to |
+| `-g/--groups GROUPS_CSV` | CSV of positive integers the determines groups of strands to weave. E.g. `3,4` means weave the first 3 strands, and the next 4 strands separately. If not specified, all strands are woven. If there are not enough groups for the number of strands, the list of groups will be repeated |
 
 **Examples:**
 

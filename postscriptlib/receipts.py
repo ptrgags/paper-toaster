@@ -1,18 +1,24 @@
 import subprocess
 
+
 def run_program(args):
     result = subprocess.run(args, capture_output=True, shell=True)
+
+    if result.returncode == 0:
+        return
+
     if result.stdout:
         print("stdout ------------")
         lines = result.stdout.split(b"\n")
         for line in lines:
             print(line.decode("utf-8"))
-    
+
     if result.stderr:
         print("stdout ------------")
         lines = result.stderr.split(b"\n")
         for line in lines:
             print(line.decode("utf-8"))
+
 
 class Receipt:
     # PostScript uses 72 points per inch
@@ -39,7 +45,7 @@ class Receipt:
 
     def __init__(self, args):
         self.args = args
-        
+
         # configure the page layout
         self.num_cards = args.num_cards
         w = args.page_width * self.PPI
@@ -48,16 +54,16 @@ class Receipt:
             w, h = h, w
         self.width = w
         self.height = h
-        
+
         self.postscript_lines = []
         self.add_preamble()
-    
+
     def add_preamble(self):
         self.postscript_lines.extend([
             "%!",
             f"<< /PageSize [{self.width} {self.height}] >> setpagedevice",
         ])
-    
+
     def add_path(self, path):
         self.postscript_lines.extend(path.to_postscript())
 
@@ -66,10 +72,10 @@ class Receipt:
 
     def fill(self):
         self.postscript_lines.append("fill")
-    
+
     def even_odd_fill(self):
         self.postscript_lines.append("eofill")
-    
+
     def add_lines(self, lines):
         self.postscript_lines.extend(lines)
 
@@ -81,7 +87,7 @@ class Receipt:
 
     def outline_page(self):
         self.rectstroke(0, 0, self.width, self.height)
-    
+
     def fill_page(self):
         self.rectfill(0, 0, self.width, self.height)
 
@@ -90,7 +96,7 @@ class Receipt:
         for line in lines:
             self.postscript_lines.append(f"  {line}")
         self.postscript_lines.append(f"}} def")
-    
+
     def set_font(self, font_name, size_points):
         self.postscript_lines.extend([
             f"/{font_name} findfont",
@@ -106,7 +112,7 @@ class Receipt:
 
     def setup(self):
         pass
-    
+
     def draw(self):
         pass
 
@@ -125,21 +131,21 @@ class Receipt:
             for line in self.postscript_lines:
                 f.write(f"{line}\n")
             f.write("showpage")
-        
+
         # The following requires GhostScript to work!
-            
-        # Export a PDF file 
+
+        # Export a PDF file
         print(f"Exporting PDF: {pdf_file}")
         run_program(['ps2pdf', postscript_file])
 
-        # Export thumbnail image for 
+        # Export thumbnail image for
         # for a single ATC, this is 250x350 px
         print(f"Exporting thumbnail (100 DPI): {thumbnail_file}")
         run_program([
             'gswin64c',
             '-o', thumbnail_file,
-            '-sDEVICE=png16m', 
-            "-r100", 
+            '-sDEVICE=png16m',
+            "-r100",
             postscript_file
         ])
 
@@ -149,8 +155,8 @@ class Receipt:
         run_program([
             'gswin64c',
             '-o', web_file,
-            '-sDEVICE=png16m', 
-            "-r200", 
+            '-sDEVICE=png16m',
+            "-r200",
             postscript_file
         ])
 
@@ -160,7 +166,7 @@ class Receipt:
         run_program([
             'gswin64c',
             '-o', print_file,
-            '-sDEVICE=png16m', 
-            "-r300", 
+            '-sDEVICE=png16m',
+            "-r300",
             postscript_file
         ])
