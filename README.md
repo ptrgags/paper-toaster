@@ -44,6 +44,27 @@ The output documents are written to `output/<artwork_id>_*`. This includes:
 * `<artwork_id>_web.png` - (Requires GhostScript) a PNG version at 200 DPI. I use this to make larger screenshots for my website.
 * `<artwork_id>_thumbnail.png` - (Requires GhostScript) a PNG version at 100 DPI. I use this for thumbnails in the README and on my website.
 
+## Docker
+
+### Running in a container
+
+```sh
+# Ghostscript post-processing
+docker container run -v /your/path/here:/workdir --rm -it post-toast-ghost <arwork_id>.ps
+```
+
+### Building the images
+
+```sh
+# from the repo root
+
+# Base image paper-toaster
+docker image build -f ./docker/Dockerfile --target paper-toaster -t paper-toaster .
+
+# Ghostscript image converter, post-toast-ghost
+docker image build -f ./docker/Dockerfile --target post-toast-ghost -t post-toast-ghost .
+```
+
 ### Global Options
 
 There are a few options that can be used with any artwork to control the page
