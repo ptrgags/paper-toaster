@@ -1,7 +1,7 @@
 import random
 
-from postscriptlib import receipts
-from postscriptlib.vec2 import Vec2
+from papertoaster import receipts
+from papertoaster.vec2 import Vec2
 
 # Postscript points-per-inch
 PPI = receipts.Receipt.PPI
@@ -17,19 +17,20 @@ CHAR_WIDTH = 7
 
 TITLE_SIZE = 2 * FONT_SIZE
 
+
 class QuietDice(receipts.Receipt):
     ARTWORK_ID = 'quiet_dice'
 
     @classmethod
     def add_arguments(cls, subparser):
         subparser.add_argument(
-            "n", 
-            type=int, 
+            "n",
+            type=int,
             help="how many dice to roll"
         )
         subparser.add_argument(
-            "sides", 
-            type=int, 
+            "sides",
+            type=int,
             help="how many sides per die"
         )
         subparser.add_argument(
@@ -58,7 +59,7 @@ class QuietDice(receipts.Receipt):
         for i in range(self.n):
             total += random.randint(1, self.sides)
         return total + self.modifier
-    
+
     def draw(self):
         self.set_font("Courier-Bold", FONT_SIZE)
         for i in range(self.rows):
@@ -68,7 +69,7 @@ class QuietDice(receipts.Receipt):
                 result = self.roll_dice()
                 result_str = f"{result:>{CHARS_PER_COLUMN}} "
                 self.draw_text(Vec2(x, y), result_str)
-        
+
         self.set_font("Courier-Bold", TITLE_SIZE)
         if self.modifier == 0:
             title = f"{self.n}d{self.sides}"

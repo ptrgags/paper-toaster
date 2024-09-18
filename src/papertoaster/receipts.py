@@ -122,51 +122,7 @@ class Receipt:
         and also generate some post-processed versions
         """
         postscript_file = f"output/{artwork_name}.ps"
-        pdf_file = f"output/{artwork_name}.pdf"
-        thumbnail_file = f"output/{artwork_name}_thumbnail.png"
-        web_file = f"output/{artwork_name}_web.png"
-        print_file = f"output/{artwork_name}_print.png"
-
         with open(postscript_file, "w") as f:
             for line in self.postscript_lines:
                 f.write(f"{line}\n")
             f.write("showpage")
-
-        # The following requires GhostScript to work!
-
-        # Export a PDF file
-        print(f"Exporting PDF: {pdf_file}")
-        run_program(['ps2pdf', postscript_file])
-
-        # Export thumbnail image for
-        # for a single ATC, this is 250x350 px
-        print(f"Exporting thumbnail (100 DPI): {thumbnail_file}")
-        run_program([
-            'gswin64c',
-            '-o', thumbnail_file,
-            '-sDEVICE=png16m',
-            "-r100",
-            postscript_file
-        ])
-
-        # Export image for my website
-        # for a single ATC, this is 500x700 px
-        print(f"Exporting web image (200 DPI): {thumbnail_file}")
-        run_program([
-            'gswin64c',
-            '-o', web_file,
-            '-sDEVICE=png16m',
-            "-r200",
-            postscript_file
-        ])
-
-        # If I ever want to print the image with a printing service, 300 DPI is
-        # usually a good target resolution. For a single ATC this is 750x1050 px
-        print(f"Exporting image for printing (300 DPI): {print_file}")
-        run_program([
-            'gswin64c',
-            '-o', print_file,
-            '-sDEVICE=png16m',
-            "-r300",
-            postscript_file
-        ])

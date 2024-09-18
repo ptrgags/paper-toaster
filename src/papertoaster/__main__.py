@@ -3,7 +3,7 @@ import argparse
 import random
 import time
 
-from artworks import ARTWORKS
+from papertoaster.artworks import ARTWORKS
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

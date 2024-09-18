@@ -1,6 +1,6 @@
 import random
 
-from postscriptlib import receipts
+from papertoaster import receipts
 
 RIGHT = 0
 UP = 1
@@ -65,6 +65,7 @@ EDGE_TILE_CHOICES = {
     (EDGE, OUT, OUT): "source2",
 }
 
+
 def left_shift_tuple4(tuple, places):
     return (
         tuple[places % 4],
@@ -73,12 +74,13 @@ def left_shift_tuple4(tuple, places):
         tuple[(3 + places) % 4]
     )
 
+
 assert left_shift_tuple4((1, 2, 3, 4), 3) == (4, 1, 2, 3)
 
 
 class EdgeDirectionTiling(receipts.Receipt):
     ARTWORK_ID = 'edge_directions'
-    
+
     @classmethod
     def add_arguments(cls, subparser):
         subparser.add_argument(
@@ -109,18 +111,18 @@ class EdgeDirectionTiling(receipts.Receipt):
         ]
         self.populate_edges()
         self.populate_tiles()
-    
+
     def populate_edges(self):
         V_CHOICES = [LEFT, RIGHT]
         for i in range(self.grid_height):
             for j in range(1, (self.grid_width + 1) - 1):
                 self.v_edges[i][j] = random.choice(V_CHOICES)
-        
+
         H_CHOICES = [UP, DOWN]
         for i in range(1, (self.grid_height + 1) - 1):
             for j in range(self.grid_width):
                 self.h_edges[i][j] = random.choice(H_CHOICES)
-    
+
     def populate_tiles(self):
         for i in range(self.grid_height):
             for j in range(self.grid_width):
@@ -138,7 +140,7 @@ class EdgeDirectionTiling(receipts.Receipt):
                     tile = ("cross", rotation)
 
                 self.grid[i][j] = tile
-    
+
     def pick_tile(self, edges):
         (right_edge, up_edge, left_edge, down_edge) = edges
         if right_edge == RIGHT:
@@ -147,7 +149,7 @@ class EdgeDirectionTiling(receipts.Receipt):
             right = IN
         else:
             right = EDGE
-        
+
         if up_edge == UP:
             up = OUT
         elif up_edge == DOWN:
@@ -161,22 +163,22 @@ class EdgeDirectionTiling(receipts.Receipt):
             left = IN
         else:
             left = EDGE
-        
+
         if down_edge == DOWN:
             down = OUT
         elif down_edge == UP:
             down = IN
         else:
             down = EDGE
-        
+
         key = (right, up, left, down)
         tile_choices = TILE_CHOICES.get(key, None)
 
         if tile_choices is None:
             return self.pick_edge_tile(key)
-        
+
         return random.choice(tuple(tile_choices))
-    
+
     def pick_edge_tile(self, key):
         # 4 edges to a tile
         N = 4
@@ -187,7 +189,7 @@ class EdgeDirectionTiling(receipts.Receipt):
             if key[i] == EDGE:
                 first_edge = i
                 break
-        
+
         # Find the second edge. If it exists, this is a corner tile
         second_edge = None
         for i in range(first_edge + 1, N):
@@ -200,7 +202,7 @@ class EdgeDirectionTiling(receipts.Receipt):
         start_index = first_edge
         if second_edge is not None and (second_edge - first_edge) != 1:
             start_index = second_edge
-        
+
         # How many 90 degree rotations are needed to rotate from the bottom
         # to the correct orientation.
         rotation = (start_index + 1) % N
@@ -214,7 +216,7 @@ class EdgeDirectionTiling(receipts.Receipt):
         # on the bottom
         tile = EDGE_TILE_CHOICES[edge_key[1:]]
         return (tile, rotation)
-    
+
     def draw(self):
         thickness = 1.0 / self.square_size
 
@@ -300,7 +302,7 @@ class EdgeDirectionTiling(receipts.Receipt):
             "0 1 0.5 270 360 arc",
             "stroke",
             "newpath",
-            "0 0.5 moveto", 
+            "0 0.5 moveto",
             "1 0.5 lineto",
             "stroke"
         ])
@@ -310,7 +312,7 @@ class EdgeDirectionTiling(receipts.Receipt):
             "1 1 0.5 180 270 arc",
             "stroke",
             "newpath",
-            "0 0.5 moveto", 
+            "0 0.5 moveto",
             "1 0.5 lineto",
             "stroke"
         ])
