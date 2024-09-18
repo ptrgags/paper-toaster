@@ -1,9 +1,65 @@
 #!/usr/bin/env python3
+import os
 import argparse
 import random
+import sys
 import time
+from typing import Optional
 
 from papertoaster.artworks import ARTWORKS
+
+
+def init_seed(seed: Optional[int]) -> int:
+    """
+    Set the random seed if --seed was specified, or choose a seed based on
+    the current time in seconds. Returns the seed value that was used.
+    """
+    if seed is not None:
+        random.seed(seed)
+        return seed
+
+    time_seed = int(time.time() % 10000)
+    random.seed(time_seed)
+    return time_seed
+
+
+def get_work_dir() -> str:
+    """
+    Get the value of the environment variable WORK_DIR, and make sure it's a
+    directory. This method may exit the program with an error message if not
+    specified or invalid.
+    """
+    output_dir = os.environ.get('WORK_DIR')
+    if output_dir is None:
+        print("The environment variable WORK_DIR must be set to a directory where output files will be generated.")
+        sys.exit(1)
+
+    directory_exists = os.path.isdir(output_dir)
+    if not directory_exists and output_dir == '/workdir':
+        print("/workdir not found. Make sure to set a bind mount for this when running Docker!")
+        sys.exit(1)
+
+    if not directory_exists:
+        print(f"{output_dir} not a directory. Make sure the environment variable WORK_DIR is set to a valid directory!")
+        sys.exit(1)
+
+    return output_dir
+
+
+def make_receipt(args: argparse.Namespace, output_dir: str):
+    # Receipt.add_subparser stores the class in the args
+    try:
+        ReceiptClass = args.receipt_class
+        receipt = ReceiptClass(args)
+        receipt.setup()
+        receipt.draw()
+        receipt.print(output_dir, args.artwork)
+    except AttributeError as error:
+        print(error)
+        # No subcommand was specified, so receipt_class
+        # is not defined. Print a help message instead
+        parser.print_help()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -35,6 +91,10 @@ if __name__ == "__main__":
         type=int,
         help="If provided, random.seed() will be called so random generation will be reproducible. If not provided, the seed will be chosen automatically."
     )
+    parser.add_argument(
+        "--output-dir",
+        help="directory where output will be written",
+    )
     subparsers = parser.add_subparsers(dest='artwork')
 
     # Each receipt will add a subparser, so the overall usage
@@ -44,22 +104,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.seed is not None:
-        random.seed(args.seed)
-    else:
-        time_seed = int(time.time() % 10000)
-        print(f"Seeding with current time mod 10k: {time_seed}")
-        random.seed(time_seed)
+    seed = init_seed(args.seed)
+    print(f"Using random seed {seed}")
 
-    # Receipt.add_subparser stores the class in the args
-    try:
-        ReceiptClass = args.receipt_class
-        receipt = ReceiptClass(args)
-        receipt.setup()
-        receipt.draw()
-        receipt.print(args.artwork)
-    except AttributeError as error:
-        print(error)
-        # No subcommand was specified, so receipt_class
-        # is not defined. Print a help message instead
-        parser.print_help()
+    work_dir = get_work_dir()
+    make_receipt(args, work_dir)

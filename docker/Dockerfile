@@ -1,6 +1,7 @@
 # Python container for running the main script and generating postscript -------
 FROM python:3.12-slim AS paper-toaster
 WORKDIR /app
+ENV WORK_DIR=/workdir
 
 RUN adduser \
     --disabled-password \

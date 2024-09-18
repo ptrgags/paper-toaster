@@ -1,23 +1,4 @@
-import subprocess
-
-
-def run_program(args):
-    result = subprocess.run(args, capture_output=True, shell=True)
-
-    if result.returncode == 0:
-        return
-
-    if result.stdout:
-        print("stdout ------------")
-        lines = result.stdout.split(b"\n")
-        for line in lines:
-            print(line.decode("utf-8"))
-
-    if result.stderr:
-        print("stdout ------------")
-        lines = result.stderr.split(b"\n")
-        for line in lines:
-            print(line.decode("utf-8"))
+import os
 
 
 class Receipt:
@@ -116,12 +97,12 @@ class Receipt:
     def draw(self):
         pass
 
-    def print(self, artwork_name):
+    def print(self, work_dir, artwork_name):
         """
         "print" to a PostScript file,
         and also generate some post-processed versions
         """
-        postscript_file = f"output/{artwork_name}.ps"
+        postscript_file = os.path.join(work_dir, f"{artwork_name}.ps")
         with open(postscript_file, "w") as f:
             for line in self.postscript_lines:
                 f.write(f"{line}\n")
