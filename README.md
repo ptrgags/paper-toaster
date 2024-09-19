@@ -38,7 +38,7 @@ once instead of having to repeat it every command.
 
 ```bash
 # bash
-export OUTPUT_DIR="/path/to/workdir"
+export WORK_DIR="/path/to/workdir"
 ```
 
 ### Run the script
@@ -78,10 +78,10 @@ docker container run -v /your/path/here:/workdir --rm -it ptrgags/post-toast-gho
 # from the repo root
 
 # Base image paper-toaster
-docker image build -f ./docker/Dockerfile --target paper-toaster -t paper-toaster .
+docker image build -f ./docker/Dockerfile --target paper-toaster -t ptrgags/paper-toaster .
 
 # Ghostscript image converter, post-toast-ghost
-docker image build -f ./docker/Dockerfile --target post-toast-ghost -t post-toast-ghost .
+docker image build -f ./docker/Dockerfile --target post-toast-ghost -t ptrgags/post-toast-ghost .
 ```
 
 ### Global Options
@@ -361,7 +361,7 @@ camera to scan it, but sometimes third-party apps are necessary.
 
 | Example | Arguments | Description |
 |---|---|---|
-| ![Example that encodes "Paper Toaster"](figures/barcode128_example.png) | `--landscape barcode128 "Paper Toaster"` | Simple example that encodes the text "Paper Toaster" |
+| ![Example that encodes "Paper Toaster"](figures/barcode128_example.png) | `barcode128 --landscape "Paper Toaster"` | Simple example that encodes the text "Paper Toaster" |
 
 ### Turtle Dances (2022-06-27)
 

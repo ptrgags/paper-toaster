@@ -1,18 +1,21 @@
+import argparse
 import os
 
 
 class Receipt:
     # PostScript uses 72 points per inch
     PPI = 72
+    ARTWORK_ID = "<receipt>"
 
     @classmethod
-    def add_subparser(cls, subparsers):
+    def add_subparser(cls, subparsers, common_parser: argparse.ArgumentParser):
         """
         For each receipt, override this method
         and add a subparser. Additional arguments
         can be added as desired.
         """
-        subparser = subparsers.add_parser(cls.ARTWORK_ID)
+        subparser = subparsers.add_parser(
+            cls.ARTWORK_ID, parents=[common_parser])
         cls.add_arguments(subparser)
         subparser.set_defaults(receipt_class=cls)
 

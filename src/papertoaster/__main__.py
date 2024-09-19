@@ -62,45 +62,44 @@ def make_receipt(args: argparse.Namespace, output_dir: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
+    # Common options that will be added to every subcommand.
+    common_parser = argparse.ArgumentParser(add_help=False)
+    common_parser.add_argument(
         "--num-cards",
         type=int,
         default=1,
         help="How many trading cards tall (3.5 inches) each page of the receipt should be"
     )
-    parser.add_argument(
+    common_parser.add_argument(
         "--page-width",
         type=float,
         default=2.5,  # width of an art trading card
         help="Width of a single page in inches"
     )
-    parser.add_argument(
+    common_parser.add_argument(
         "--page-height",
         type=float,
         default=3.5,  # height of an art trading card
         help="Height of a single page in inches"
     )
-    parser.add_argument(
+    common_parser.add_argument(
         "--landscape",
         action="store_true",
         help="If set, the pages will use landscape rather than portrait orientation"
     )
-    parser.add_argument(
+    common_parser.add_argument(
         "--seed",
         type=int,
         help="If provided, random.seed() will be called so random generation will be reproducible. If not provided, the seed will be chosen automatically."
     )
-    parser.add_argument(
-        "--output-dir",
-        help="directory where output will be written",
-    )
+
+    parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='artwork')
 
     # Each receipt will add a subparser, so the overall usage
-    # becomes main.py [global_options] ARTWORK [artwork_options]
+    # becomes python -m papertoaster COMMAND [args]
     for artwork in ARTWORKS:
-        artwork.add_subparser(subparsers)
+        artwork.add_subparser(subparsers, common_parser)
 
     args = parser.parse_args()
 
