@@ -1,8 +1,7 @@
 #!/bin/bash
-# Run this from the repo root!
-# usage ./bin/run_docker.sh ARTWORK_ID [args]
-# same args as the python module
-
+# Run paper-toaster and post-processing in a Docker container
+#
+# usage ./docker/paper-toaster.sh ARTWORK_ID [args]
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
 mkdir -p $REPO_ROOT/workdir
