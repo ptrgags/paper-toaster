@@ -6,6 +6,26 @@ interesting things I've learned along the way.
 This is not the changelog, for that see the GitHub releases page for this
 repo.
 
+## 2024-09-19 Dockerize
+
+Recently I've been reading [_Learn Docker in a Month of Lunches_](https://www.google.com/books/edition/Learn_Docker_in_a_Month_of_Lunches/gff1DwAAQBAJ?hl=en) by Elton Stoneman. Now
+that I have a better understanding of how to use Docker, I'm starting to see
+how it can improve some of my past work like this repo.
+
+Here in `paper-toaster`, it adds the following benefits:
+
+- The code will run consistently over time, since I update my repos infrequently.
+- Saves some headaches with the GhostScript dependency since that command is named slightly differently on Windows.
+
+However, to make that happen, I had to reorganize the repo quite a bit:
+
+- Moving the code into `src/` to make it easier to copy into the container
+- Separating the GhostScript code from the Python code
+- Instead of having global command line flags and per-subcommand options, I found that inheriting shared options gives a cleaner interface, especially when chaining the Docker commands together.
+
+I'll admit I find the docker CLI usage a bit cumbersome, but it's easy enough
+to make wrappers with a shell script (see `docker/paper-toaster.sh` for example)
+
 ## 2024-06-10 Robot Walks
 
 Today I added a new artwork to the repo, Robot Walks. I also added some
