@@ -9,8 +9,8 @@ This script doesn't solve the puzzle, just visualizes the paths since they
 look cool.
 '''
 
-from postscriptlib import receipts, path
-from postscriptlib.vec2 import Vec2
+from papertoaster import receipts, path
+from papertoaster.vec2 import Vec2
 
 # We're only concerned with 1/5 turns
 N = 5

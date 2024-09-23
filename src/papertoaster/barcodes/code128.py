@@ -1,16 +1,18 @@
-from postscriptlib.barcodes.barcode import Barcode
+from papertoaster.barcodes.barcode import Barcode
 
 QUIET_ZONE = [0] * 10
 
+
 def to_digit_array(digit_str):
     return [int(c) for c in digit_str]
+
 
 # Encode table from https://en.wikipedia.org/wiki/Code_128#Bar_code_widths
 # I'm only using Subcode B for now, but keeping the rest around just in case
 # since processing look-up tables is a chore
 #
 # The special characters aren't properly listed here but oh well, they're
-# handled separately anyway 
+# handled separately anyway
 DATA_CHARS = [
     # [Subcode A, Subcode B, Subcode C, bar pattern]
     [" ", " ", "00", "11011001100"],
@@ -122,6 +124,7 @@ DATA_CHARS = [
 # modulo for computing the checksum
 assert len(DATA_CHARS) == 103
 
+
 def make_char_tables():
     a_table = {}
     b_table = {}
@@ -136,6 +139,7 @@ def make_char_tables():
         "B": b_table,
         "C": c_table
     }
+
 
 DATA_SYMBOLS = make_char_tables()
 
@@ -158,6 +162,7 @@ START_SYMBOL_VALUES = {
 
 # I'm using the longer form of this which includes the "final bar"
 STOP_SYMBOL = to_digit_array("1100011101011")
+
 
 class Code128:
     def __init__(self, module_width, module_height):
@@ -189,7 +194,7 @@ class Code128:
             weight += 1
             bars += symbols[c]
             checksum += weight * DATA_VALUES[c]
-        
+
         checksum %= len(DATA_CHARS)
         _, _, _, checksum_pattern = DATA_CHARS[checksum]
         bars += to_digit_array(checksum_pattern)
@@ -197,7 +202,6 @@ class Code128:
         bars += STOP_SYMBOL + QUIET_ZONE
 
         return bars
-
 
     def draw(self, start_x, start_y, page_width, page_height, text):
         bars = self.encode(text)
@@ -214,6 +218,3 @@ class Code128:
         offset_y = start_y + margin_y / 2
 
         return self.barcode.draw(offset_x, offset_y, bars)
-            
-        
-

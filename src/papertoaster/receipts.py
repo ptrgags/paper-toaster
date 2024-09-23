@@ -1,37 +1,21 @@
-import subprocess
-
-
-def run_program(args):
-    result = subprocess.run(args, capture_output=True, shell=True)
-
-    if result.returncode == 0:
-        return
-
-    if result.stdout:
-        print("stdout ------------")
-        lines = result.stdout.split(b"\n")
-        for line in lines:
-            print(line.decode("utf-8"))
-
-    if result.stderr:
-        print("stdout ------------")
-        lines = result.stderr.split(b"\n")
-        for line in lines:
-            print(line.decode("utf-8"))
+import argparse
+import os
 
 
 class Receipt:
     # PostScript uses 72 points per inch
     PPI = 72
+    ARTWORK_ID = "<receipt>"
 
     @classmethod
-    def add_subparser(cls, subparsers):
+    def add_subparser(cls, subparsers, common_parser: argparse.ArgumentParser):
         """
         For each receipt, override this method
         and add a subparser. Additional arguments
         can be added as desired.
         """
-        subparser = subparsers.add_parser(cls.ARTWORK_ID)
+        subparser = subparsers.add_parser(
+            cls.ARTWORK_ID, parents=[common_parser])
         cls.add_arguments(subparser)
         subparser.set_defaults(receipt_class=cls)
 
@@ -116,57 +100,13 @@ class Receipt:
     def draw(self):
         pass
 
-    def print(self, artwork_name):
+    def print(self, work_dir, artwork_name):
         """
         "print" to a PostScript file,
         and also generate some post-processed versions
         """
-        postscript_file = f"output/{artwork_name}.ps"
-        pdf_file = f"output/{artwork_name}.pdf"
-        thumbnail_file = f"output/{artwork_name}_thumbnail.png"
-        web_file = f"output/{artwork_name}_web.png"
-        print_file = f"output/{artwork_name}_print.png"
-
+        postscript_file = os.path.join(work_dir, f"{artwork_name}.ps")
         with open(postscript_file, "w") as f:
             for line in self.postscript_lines:
                 f.write(f"{line}\n")
             f.write("showpage")
-
-        # The following requires GhostScript to work!
-
-        # Export a PDF file
-        print(f"Exporting PDF: {pdf_file}")
-        run_program(['ps2pdf', postscript_file])
-
-        # Export thumbnail image for
-        # for a single ATC, this is 250x350 px
-        print(f"Exporting thumbnail (100 DPI): {thumbnail_file}")
-        run_program([
-            'gswin64c',
-            '-o', thumbnail_file,
-            '-sDEVICE=png16m',
-            "-r100",
-            postscript_file
-        ])
-
-        # Export image for my website
-        # for a single ATC, this is 500x700 px
-        print(f"Exporting web image (200 DPI): {thumbnail_file}")
-        run_program([
-            'gswin64c',
-            '-o', web_file,
-            '-sDEVICE=png16m',
-            "-r200",
-            postscript_file
-        ])
-
-        # If I ever want to print the image with a printing service, 300 DPI is
-        # usually a good target resolution. For a single ATC this is 750x1050 px
-        print(f"Exporting image for printing (300 DPI): {print_file}")
-        run_program([
-            'gswin64c',
-            '-o', print_file,
-            '-sDEVICE=png16m',
-            "-r300",
-            postscript_file
-        ])

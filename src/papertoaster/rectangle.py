@@ -1,10 +1,11 @@
-from postscriptlib.vec2 import Vec2
+from papertoaster.vec2 import Vec2
+
 
 class Rectangle:
     def __init__(self, x, y, w, h):
         self.min = Vec2(x, y)
         self.max = Vec2(x + w, y + h)
-    
+
     def __repr__(self):
         x = self.min.x
         y = self.min.y
@@ -15,7 +16,7 @@ class Rectangle:
     @property
     def width(self):
         return self.max.x - self.min.x
-    
+
     @property
     def height(self):
         return self.max.y - self.min.y
@@ -31,7 +32,7 @@ class Rectangle:
             self.min.x = x
         if x > self.max.x:
             self.max.x = x
-        
+
         if y < self.min.y:
             self.min.y = y
         if y > self.max.y:

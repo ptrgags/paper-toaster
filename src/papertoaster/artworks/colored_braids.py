@@ -1,7 +1,7 @@
 import enum
 import random
 
-from postscriptlib import receipts
+from papertoaster import receipts
 
 STRAIGHT1 = 's1'
 STRAIGHT2 = 's2'
@@ -48,12 +48,13 @@ PALETTE_INVERTED = [
 PALETTE = PALETTE_RAINBOW
 PALETTE_SIZE = len(PALETTE)
 
+
 def odd_even_shuffle(array, rows, swap_chance):
     n = len(array)
     for i in range(rows):
         row_commands = []
         first_index = i % 2
-        
+
         if first_index == 1:
             # Handle a single strand on the left
             row_commands.append((STRAIGHT1, 0, array[0]))
@@ -69,11 +70,13 @@ def odd_even_shuffle(array, rows, swap_chance):
             else:
                 # Keep the strands as-is
                 row_commands.append((STRAIGHT2, j, array[j], array[j + 1]))
-            
+
         yield row_commands
+
 
 def strand_groups(s):
     return [int(x) for x in s.split(",")]
+
 
 def make_groups(group_lengths, total_strands):
     all_strands = list(range(total_strands))
@@ -92,12 +95,13 @@ def make_groups(group_lengths, total_strands):
         # If group_lengths is too short, cycle around
         length_index += 1
         length_index %= len(group_lengths)
-    
+
     return result
+
 
 class ColoredBraids(receipts.Receipt):
     ARTWORK_ID = 'colored_braids'
-    
+
     @classmethod
     def add_arguments(cls, subparser):
         subparser.add_argument(
@@ -160,7 +164,7 @@ class ColoredBraids(receipts.Receipt):
         thick = 3 * thin
 
         # usage: right_color left_color right_over_left
-        # where the colors are 
+        # where the colors are
         # r g b
         self.define_function("right_over_left", [
             "newpath",
@@ -185,7 +189,7 @@ class ColoredBraids(receipts.Receipt):
         ])
 
         # usage: left_color right_color left_over_right
-        # where the colors are 
+        # where the colors are
         # r g b
         self.define_function("left_over_right", [
             "newpath",
@@ -250,7 +254,7 @@ class ColoredBraids(receipts.Receipt):
         for group in self.strand_array:
             self.draw_group(start_column, group)
             start_column += len(group)
-        
+
     def draw_group(self, start_column, group):
         # Draw the strands straight for the first row
         for i, strand in enumerate(group):
@@ -262,10 +266,9 @@ class ColoredBraids(receipts.Receipt):
                 f"{color} straight1",
                 "grestore"
             ])
-        
 
         num_rows = self.grid_height - 1
-        
+
         # Progressively swap strands and add draw the result
         shuffle_gen = odd_even_shuffle(group, num_rows, self.swap_chance)
         for i, commands in enumerate(shuffle_gen):

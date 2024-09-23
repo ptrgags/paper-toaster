@@ -1,7 +1,7 @@
 import math
 
-from postscriptlib import receipts, path
-from postscriptlib.vec2 import Vec2
+from papertoaster import receipts, path
+from papertoaster.vec2 import Vec2
 COS_60 = math.cos(math.pi / 3)
 SIN_60 = math.sin(math.pi / 3)
 UNIT_BASIS = [
@@ -17,6 +17,7 @@ X_START = -7
 X_END = 4
 Y_START = 0
 Y_END = 11
+
 
 class HexGrid(receipts.Receipt):
     ARTWORK_ID = 'hex_grid'
@@ -47,7 +48,7 @@ class HexGrid(receipts.Receipt):
     def setup(self):
         self.side_length = self.args.side_length * self.PPI
         self.expand_factor = self.args.expand_factor
-        
+
         # create the 6 vectors for the 6 sides of the polygon
         self.basis = [self.side_length * v for v in UNIT_BASIS]
 
@@ -55,13 +56,13 @@ class HexGrid(receipts.Receipt):
         self.t1 = self.basis[0] + self.basis[5]
         self.t2 = self.basis[0] + self.basis[1]
 
-        # The grid vectors aren't aligned with the 
+        # The grid vectors aren't aligned with the
         # receipt so have to expand the grid quite a bit :/
         self.x_start = self.num_cards * X_START
         self.x_end = X_END
         self.y_start = Y_START
         self.y_end = self.num_cards * Y_END
-    
+
     def draw_hexagon(self, corner):
         hex = path.Path()
         hex.rpolygon(corner, self.basis)
@@ -74,7 +75,7 @@ class HexGrid(receipts.Receipt):
                 corner = i * self.t1 + j * self.t2
                 corner = self.expand_factor * corner
                 self.draw_hexagon(corner)
-    
+
     def draw_hexagon_vertices(self, start):
         hex = path.Path()
         vertex = start
@@ -84,7 +85,7 @@ class HexGrid(receipts.Receipt):
             vertex += v
         self.add_path(hex)
         self.fill()
-    
+
     def draw_hexagons_dots(self):
         for i in range(self.x_start, self.x_end):
             for j in range(self.y_start, self.y_end):

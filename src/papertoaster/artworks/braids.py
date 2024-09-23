@@ -1,10 +1,11 @@
 import random
 
-from postscriptlib import receipts
+from papertoaster import receipts
+
 
 class Braids(receipts.Receipt):
     ARTWORK_ID = 'braids'
-    
+
     @classmethod
     def add_arguments(cls, subparser):
         subparser.add_argument(
@@ -27,7 +28,7 @@ class Braids(receipts.Receipt):
         self.grid_height = int(self.height / square_size)
         self.square_size = square_size
         self.invert_colors = self.args.invert_colors
-    
+
     def draw(self):
         thin = 2.0 / self.square_size
         thick = 3 * thin
@@ -115,7 +116,7 @@ class Braids(receipts.Receipt):
                     tile,
                     "grestore"
                 ])
-            
+
             # On the left and right edges, every other row skips
             # the first string, so draw it by making a slightly off-page
             # tile

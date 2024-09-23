@@ -1,8 +1,9 @@
 import random
 
-from postscriptlib import receipts
-from postscriptlib.path import Path
-from postscriptlib.vec2 import Vec2
+from papertoaster import receipts
+from papertoaster.path import Path
+from papertoaster.vec2 import Vec2
+
 
 def make_grid(n):
     # blank nxn grid, all at height 1
@@ -28,11 +29,13 @@ def make_grid(n):
             bottom_neighbor = grid[row + 1][col]
             increase = random.choice([0, 1, 2])
             grid[row][col] = max(left_neighbor, bottom_neighbor) + increase
-    
+
     return grid
+
 
 def grid_max(grid):
     return max(max(row) for row in grid)
+
 
 def back_to_front(grid):
     rows = len(grid)
@@ -47,7 +50,7 @@ def back_to_front(grid):
             yield (Vec2(col, (rows - 1) - row), height)
             col += 1
             row += 1
-    
+
     # iterate diagonally, this time starting in the leftmost column
     for i in range(1, rows):
         row = i
@@ -57,7 +60,7 @@ def back_to_front(grid):
             yield (Vec2(col, (rows - 1) - row), height)
             col += 1
             row += 1
-        
+
 
 class IsoGrid(receipts.Receipt):
     ARTWORK_ID = 'iso_grid'
@@ -75,7 +78,8 @@ class IsoGrid(receipts.Receipt):
         # horizontal and vertical direction of the page. Each tile is a diamond
         # that fits in a 4x2 box, but the bounding box overlaps with neighboring
         # tiles
-        self.tile_rows = self.grid_rows + self.grid_columns + self.grid_height * self.num_cards
+        self.tile_rows = self.grid_rows + self.grid_columns + \
+            self.grid_height * self.num_cards
         self.tile_columns = 2 * (self.grid_rows + self.grid_columns)
 
         # compute the width of each tile so it just fits horizontally
@@ -90,13 +94,14 @@ class IsoGrid(receipts.Receipt):
         # Since we're looking at the grid from the bottom-right corner, the
         # bottom left corner is shifted to the bottom
         self.iso_origin = Vec2(2 * self.grid_rows * self.tile_size, 0)
-        
+
     def draw_tile(self, tile_coords, height):
         top_color = 0.8
         front_color = 0.5
         right_color = 0.2
 
-        bottom_corner = self.iso_origin + tile_coords.x * self.iso_x + tile_coords.y * self.iso_y
+        bottom_corner = self.iso_origin + tile_coords.x * \
+            self.iso_x + tile_coords.y * self.iso_y
         top_corner = bottom_corner + height * self.iso_z
 
         top_face = Path()
@@ -129,9 +134,8 @@ class IsoGrid(receipts.Receipt):
         self.add_path(front_face)
         self.add_lines([f"{front_color} setgray fill"])
 
-
     def draw(self):
         self.fill_page()
-        
+
         for (corner, height) in back_to_front(self.grid):
             self.draw_tile(corner, height)

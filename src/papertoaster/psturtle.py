@@ -1,15 +1,17 @@
 import math
 
-from postscriptlib.rectangle import Rectangle
-from postscriptlib.vec2 import Vec2
-from postscriptlib.mathutils import remap
-from postscriptlib.path import Path
+from papertoaster.rectangle import Rectangle
+from papertoaster.vec2 import Vec2
+from papertoaster.mathutils import remap
+from papertoaster.path import Path
+
 
 class PSTurtle:
     """
     Turtle graphics but for PostScript output, unlike Python's built in
     Turtle module.
     """
+
     def __init__(self, angle_divisions):
         # The heading is tracked as an integer modulo angle_divisions
         self.heading = 0
@@ -20,11 +22,11 @@ class PSTurtle:
         self.position = Vec2(0, 0)
         self.positions = [self.position]
         self.turn_count = 0
-    
+
     @property
     def direction_vec(self):
         return Vec2.direction_vec(self.turn_angle * self.heading)
-    
+
     def forward(self, distance):
         """
         Move forward in the current direction at the given distance
@@ -33,7 +35,7 @@ class PSTurtle:
         self.position = next_pos
         self.positions.append(next_pos)
         self.bounds.add_point(next_pos)
-    
+
     def turn(self, delta_heading):
         """
         Turn 

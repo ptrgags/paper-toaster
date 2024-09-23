@@ -1,13 +1,16 @@
-from postscriptlib import receipts, path
-from postscriptlib.vec2 import Vec2
+from papertoaster import receipts, path
+from papertoaster.vec2 import Vec2
+
 
 def bin_or_dec(s):
     if s.startswith("0b"):
         return int(s[2:], 2)
     return int(s)
 
+
 def flip_bit(b):
     return (~b) & 1
+
 
 class Hitomezashi(receipts.Receipt):
     ARTWORK_ID = 'hitomezashi'
@@ -15,13 +18,13 @@ class Hitomezashi(receipts.Receipt):
     @classmethod
     def add_arguments(cls, subparser):
         subparser.add_argument(
-            "row_bits", 
-            type=bin_or_dec, 
+            "row_bits",
+            type=bin_or_dec,
             help="one bit per row of the grid. 0b notation is allowed."
         )
         subparser.add_argument(
-            "col_bits", 
-            type=bin_or_dec, 
+            "col_bits",
+            type=bin_or_dec,
             help="One bit per column of the grid. 0b notation is allowed."
         )
         subparser.add_argument(
@@ -48,13 +51,13 @@ class Hitomezashi(receipts.Receipt):
         self.grid_width = int(self.width / square_size)
         self.grid_height = int(self.height / square_size)
         self.grid = [
-            [0 for _ in range(self.grid_width)] 
+            [0 for _ in range(self.grid_width)]
             for _ in range(self.grid_height)
         ]
-        
+
         if self.odd_even:
             self.compute_odd_even()
-    
+
     def compute_odd_even(self):
         w = self.grid_width
         h = self.grid_height
@@ -119,11 +122,11 @@ class Hitomezashi(receipts.Receipt):
                     filled.rect(x, y, self.square_size, self.square_size)
         self.add_path(filled)
         self.fill()
-    
+
     def draw(self):
         if self.odd_even:
             self.fill_squares()
-        
+
         stitches = path.Path()
         self.draw_columns(stitches)
         self.draw_rows(stitches)

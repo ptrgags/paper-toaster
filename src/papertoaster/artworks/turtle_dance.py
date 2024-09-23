@@ -8,13 +8,12 @@ Generating Turtle Dances on the Plane from Integer Sequences" by Adam Colestock
 https://archive.bridgesmathart.org/2017/bridges2017-139.pdf
 """
 
-import argparse
 import itertools
 
-from postscriptlib import receipts
-from postscriptlib.path import Path
-from postscriptlib.psturtle import PSTurtle
-from postscriptlib.rectangle import Rectangle
+from papertoaster import receipts
+from papertoaster.path import Path
+from papertoaster.psturtle import PSTurtle
+from papertoaster.rectangle import Rectangle
 
 # Postscript points-per-inch
 PPI = receipts.Receipt.PPI
@@ -27,6 +26,7 @@ SEQUENCE_CHOICES = [
     "fibonacci",
     "triangle"
 ]
+
 
 def fibonacci_seq():
     """
@@ -41,6 +41,7 @@ def fibonacci_seq():
         yield a
         a, b = b, a + b
 
+
 def triangle_seq():
     """
     Triangle numbers: 
@@ -52,6 +53,7 @@ def triangle_seq():
         a += i
         yield a
 
+
 def select_sequence(s):
     if s == "natural":
         return itertools.count(0)
@@ -62,9 +64,11 @@ def select_sequence(s):
     elif s == "triangle":
         return triangle_seq()
 
+
 def modular_difference(seq, a, b):
     for x in seq:
         yield x % a - x % b
+
 
 class TurtleDance(receipts.Receipt):
     ARTWORK_ID = 'turtle_dance'
@@ -124,10 +128,10 @@ class TurtleDance(receipts.Receipt):
             if self.turtle.is_finished:
                 print(f"Finished after {i} steps")
                 break
-    
+
     def draw(self):
         self.turtle_dance()
-        
+
         dance = self.turtle.make_path(self.drawing_bounds)
         self.add_path(dance)
         if self.should_fill:
