@@ -30,6 +30,11 @@ I recommend using [Docker](https://www.docker.com/) to run this script for
 a consistent environment. And also there are OS differences for the optional
 dependency of GhostScript, so using Docker avoids that headache.
 
+This repo produces two images:
+
+- [`ptrgags/paper-toaster`](https://hub.docker.com/r/ptrgags/paper-toaster) - Main Python script.
+- [`ptrgags/post-toast-ghost`](https://hub.docker.com/r/ptrgags/post-toast-ghost) - optional post-processing step for converting the PostScript files to other formats.
+
 ### Paper Toaster Container: `ptrgags/paper-toaster`
 
 This container runs the Python code, generating an artwork as a PostScript (.ps) file.
