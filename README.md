@@ -98,7 +98,8 @@ export PAPER_TOASTER_ENV=prod
 
 ## Usage: Manual
 
-While I recomend using [Docker](#usage-docker)
+While I recomend using [Docker](#usage-docker), here are instructions for
+manual usage for reference.
 
 ### Dependencies
 
@@ -170,7 +171,6 @@ arguments are a combination of [Common options](#common-options) and the
 
 ### Common Options
 
-There are several options shared by each 
 There are a few options that can be used with any artwork to control the page
 size and layout. However, some artworks may be designed for specific
 configurations, such as one trading-card sized page
