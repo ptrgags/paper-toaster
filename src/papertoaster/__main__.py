@@ -103,6 +103,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    if not hasattr(args, 'seed'):
+        args.seed = None
     seed = init_seed(args.seed)
     print(f"Using random seed {seed}")
 
