@@ -1,6 +1,7 @@
 from papertoaster.artworks.barcode_code128 import Barcode128
 from papertoaster.artworks.braids import Braids
 from papertoaster.artworks.colored_braids import ColoredBraids
+from papertoaster.artworks.day_structure import DayStructure
 from papertoaster.artworks.edge_directions import EdgeDirectionTiling
 from papertoaster.artworks.elementary_ca import ElementaryCA
 from papertoaster.artworks.grid import Grid
@@ -16,6 +17,7 @@ ARTWORKS = [
     Barcode128,
     Braids,
     ColoredBraids,
+    DayStructure,
     EdgeDirectionTiling,
     ElementaryCA,
     Grid,
