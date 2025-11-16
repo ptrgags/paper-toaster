@@ -24,134 +24,49 @@ than the paper, so it pairs well.
 I jokingly refer to my receipt printer as a "paper toaster" since a thermal
 printer works by heating the thermal paper, darkening it. No ink is used.
 
-## Usage: Docker
+## Usage
 
-I recommend using [Docker](https://www.docker.com/) to run this script for
-a consistent environment. And also there are OS differences for the optional
-dependency of GhostScript, so using Docker avoids that headache.
+This repo is designed to be used as a Dev Container for your IDE, such as [VS Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers). This ensures a consistent Python and GhostScript version for running this code.
 
-This repo produces two images:
-
-- [`ptrgags/paper-toaster`](https://hub.docker.com/r/ptrgags/paper-toaster) - Main Python script.
-- [`ptrgags/post-toast-ghost`](https://hub.docker.com/r/ptrgags/post-toast-ghost) - optional post-processing step for converting the PostScript files to other formats.
-
-### Paper Toaster Container: `ptrgags/paper-toaster`
+### Running Paper Toaster
 
 This container runs the Python code, generating an artwork as a PostScript (.ps) file.
 
-It can be run through Docker with the following command:
+The simplest way is to use the convenience shell script, `bin/toast.sh`:
 
 ```bash
-docker container run -v /your/output/dir:/workdir --rm -it ptrgags/paper-toaster ARTWORK_ID <args>
-```
-
-Notes:
-
-- For the full list of artworks and arguments, see the [CLI Options Reference](#paper-toaster-cli-options-reference)
-- The bind mount, (`-v` flag) is **required**, as this is the directory that the postscript file will be written to
-- On Linux if you get permission errors, this is because the Docker container runs with an unprivileged user that does not match your UID. You can override this by adding the flag `--user $(id -u):$(id -g)`
-
-### Post-processing Container `ptrgags/post-toast-ghost` (Optional)
-
-The name of this container is a cheeky rhyming abbreviation of "**Post**-process
-the output of Paper **Toast**er using **Ghost**Script".
-
-This takes `/workdir/<artwork_id>.ps` (generated with `paper-toaster` above)
-and generates the following 3 files:
-
-* `<artwork_id>.pdf` - (Requires GhostScript) a PDF version of the document. I find this to be the easiest to use for printing
-* `<artwork_id>_thumbnail.png` - (Requires GhostScript) a PNG version at 100 DPI. I use this for thumbnails in the README and on my [website](https://ptrgags.dev/#/project/paper-toaster).
-* `<artwork_id>_web.png` - (Requires GhostScript) a PNG version at 200 DPI. I use this to make larger screenshots for my website.
-
-```sh
-docker container run -v /your/path/here:/workdir --rm -it ptrgags/post-toast-ghost <arwork_id>.ps
-```
-
-Notes:
-
-- The bind mount, (`-v` flag) is **required** and must match the one used for `paper-toaster` 
-
-### Building the images
-
-From the root of the repo, here is how I build the two Docker images:
-
-```bash
-# Base image paper-toaster
-docker image build -f ./docker/Dockerfile --target paper-toaster -t ptrgags/paper-toaster .
-
-# Ghostscript image converter, post-toast-ghost
-docker image build -f ./docker/Dockerfile --target post-toast-ghost -t ptrgags/post-toast-ghost .
-```
-
-### Convenience wrapper (Linux/WSL)
-
-I usually run both containers one after the other to iterate quickly. I made
-a quick Bash script to chain the commands together. It also uses an
-environment variable to configure hot-reloading of source code for development.
-
-This will create a directory `<repo_root>/workdir/` where the output will go.
-
-```sh
-# Development mode - Each time it runs, this hot-reloads the code
-export PAPER_TOASTER_ENV=dev
-./docker/run_container.sh ARTWORK_ID <args>
-
-# Production mode - This runs the latest image you have locally
-export PAPER_TOASTER_ENV=prod
-./docker/run_container.sh ARTWORK_ID <args>
-```
-
-## Usage: Manual
-
-While I recomend using [Docker](#usage-docker), here are instructions for
-manual usage for reference.
-
-### Dependencies
-
-- [Python 3](https://www.python.org/downloads/). I currently use Python 3.12. Only the standard library is used.
-- (optional) [GhostScript](https://www.ghostscript.com/) for PDF and PNG exports
-
-### Set the working directory
-
-To make integration with Docker easier, files are always written to the directory
-specified by the environment `WORK_DIR`. This also lets you set the directory
-once instead of having to repeat it every command.
-
-```bash
-# bash
-export WORK_DIR="/path/to/workdir"
-```
-
-### Run the script
-
-in the `src` directory, there's a `papertoaster` module. Executing this
-module will run the script and generate `$WORK_DIR/<artwork_id>.ps`
-
-```bash
-cd src
-
-python -m papertoaster ARTWORK_ID <args>
+./bin/toast.sh ARTWORK_ID [ARGS...]
 ```
 
 For the full list of artworks and arguments, see the [CLI Options Reference](#paper-toaster-cli-options-reference)
 
-### Post-process the output with GhostScript (optional)
+This is simply shorthand for
 
-If you want to produce PDF output or PNG images from the PostScript file,
-you can use GhostScript
+- Stepping into the `src/` folder
+- running `python -m papertoaster ARTWORK_ID [ARGS...]`
 
-Example in Linux:
+A PostScript file will appear in the `workdir/` directory of this repo,
+with the name `ARTWORK_ID.ps`
 
-```sh
-# Generate a PDF
-ps2pdf input.ps
+### Post-processing
 
-# Generate a PNG image at 300 DPI
-gs -o output.png -sDEVICE=png16m -r300 input.ps
+In practice, I want to turn the PostScript code into a PDF file and PNG images 
+for my website. There's a script available to do all of this.
+
+From the root of the container, run
+
+```bash
+./bin/convert_receipt.sh ARTWORK_ID
 ```
 
-In Windows, the usage is very similar, but on Windows the GhostScript command is
-not `gs` but `gswin64c`
+with an `ARTWORK_ID` matching the one used when running the Python script
+as described in the previous section.
+
+This takes the file `workdir/<ARTWORK_ID>.ps` and creates the following files:
+
+- `workdir/<ARTWORK_ID>.pdf` - A PDF version of the document. This can be easier for printing
+- `workdir/<ARTWORK_ID>_thumbnail.png` - a 250x350 px (100 DPI) image. I use this for thumbnails in the readme and on my [website](https://ptrgags.dev/#/project/paper-toaster).
+- `workdir/<ARTWORK_ID>_web.png` - a 500x700 px (200 DPI) image. I use this on my website.
 
 ## Logbook
 
