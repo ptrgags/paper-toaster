@@ -62,6 +62,12 @@ From the root of the container, run
 with an `ARTWORK_ID` matching the one used when running the Python script
 as described in the previous section.
 
+This takes the file `workdir/<ARTWORK_ID>.ps` and creates the following files:
+
+- `workdir/<ARTWORK_ID>.pdf` - A PDF version of the document. This can be easier for printing
+- `workdir/<ARTWORK_ID>_thumbnail.png` - a 250x350 px (100 DPI) image. I use this for thumbnails in the readme and on my [website](https://ptrgags.dev/#/project/paper-toaster).
+- `workdir/<ARTWORK_ID>_web.png` - a 500x700 px (200 DPI) image. I use this on my website.
+
 ## Logbook
 
 As with many of my projects, I keep a log of what I worked on over time. This
