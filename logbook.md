@@ -6,6 +6,14 @@ interesting things I've learned along the way.
 This is not the changelog, for that see the GitHub releases page for this
 repo.
 
+## 2025-11-16 Nope, use Dev Containers
+
+Looking back at this over a year later, I regret making a docker container. It
+makes the entry point too complicated.
+
+I also learned about Dev Containers, which is more appropriate for my use.
+All I care is that the code can run on different computers in a consistent way.
+
 ## 2024-09-19 Dockerize
 
 Recently I've been reading [_Learn Docker in a Month of Lunches_](https://www.google.com/books/edition/Learn_Docker_in_a_Month_of_Lunches/gff1DwAAQBAJ?hl=en) by Elton Stoneman. Now
