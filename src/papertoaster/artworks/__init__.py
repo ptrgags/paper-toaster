@@ -7,6 +7,7 @@ from papertoaster.artworks.grid import Grid
 from papertoaster.artworks.hex_grid import HexGrid
 from papertoaster.artworks.hitomezashi import Hitomezashi
 from papertoaster.artworks.iso_grid import IsoGrid
+from papertoaster.artworks.print_swatches import PrintSwatches
 from papertoaster.artworks.quiet_dice import QuietDice
 from papertoaster.artworks.robot_walks import RobotWalks
 from papertoaster.artworks.todo import ToDoList
@@ -23,6 +24,7 @@ ARTWORKS = [
     Hitomezashi,
     IsoGrid,
     QuietDice,
+    PrintSwatches,
     RobotWalks,
     ToDoList,
     TurtleDance

@@ -39,7 +39,7 @@ class Receipt:
         self.width = w
         self.height = h
 
-        self.postscript_lines = []
+        self.postscript_lines: list[str] = []
         self.add_preamble()
 
     def add_preamble(self):
@@ -60,7 +60,7 @@ class Receipt:
     def even_odd_fill(self):
         self.postscript_lines.append("eofill")
 
-    def add_lines(self, lines):
+    def add_lines(self, lines: list[str]):
         self.postscript_lines.extend(lines)
 
     def rectstroke(self, x, y, w, h):
@@ -100,7 +100,7 @@ class Receipt:
     def draw(self):
         pass
 
-    def print(self, work_dir, artwork_name):
+    def print(self, work_dir: str, artwork_name: str):
         """
         "print" to a PostScript file,
         and also generate some post-processed versions
