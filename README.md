@@ -135,6 +135,14 @@ DESCRIPTION
 
 -->
 
+#### Color Swatches (2026-01-27)
+
+>[!IMPORTANT]
+> Run this script on a 5 by 7 inch page
+>```
+>print_swatches --page-width 5 --page-height 7
+>```
+
 #### Robot Walks (2024-06-10)
 
 This receipt creates patterns inspired by the Project Euler [problem #208: Robot Walks](https://projecteuler.net/problem=208). This script does not solve the puzzle, but it
