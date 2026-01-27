@@ -12,7 +12,7 @@ class PrintSwatches(receipts.Receipt):
     def setup(self):
         self.square_size = 2.5 * self.PPI / (COLOR_STEPS + 1)
 
-    def draw_page(self, position: Vec2, page_index: int):
+    def draw_rgb_slice(self, position: Vec2, page_index: int):
         red = page_index / (COLOR_STEPS - 1)
 
         self.add_lines([
@@ -48,11 +48,19 @@ class PrintSwatches(receipts.Receipt):
             "grestore"
         ])
 
+    def draw_page(self, page_number: int):
+        for i in range(2):
+            y = (1 - i) * 3.5 * self.PPI
+            for j in range(2):
+                x = j * 2.5 * self.PPI
+                slice_index = 4 * page_number + 2 * i + j
+                position = Vec2(x, y)
+                self.draw_rgb_slice(position, slice_index)
+        self.add_lines(["showpage"])
+
     def draw(self):
-        for i in range(16):
-            position = Vec2(0, 0)
-            self.draw_page(position, i)
-            self.add_lines(["showpage"])
+        for page in range(4):
+            self.draw_page(page)
 
     def print(self, work_dir: str, artwork_name: str):
         postscript_file = os.path.join(work_dir, f"{artwork_name}.ps")
