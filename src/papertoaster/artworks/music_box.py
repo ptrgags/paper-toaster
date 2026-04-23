@@ -20,6 +20,9 @@ GRID_SPACING = 4 * POINTS_PER_MM
 
 NOTE_COUNT = 15
 
+STAFF_LINE_INDICES = [4, 6, 8, 10, 12]
+STAFF_LINE_THICKNESS = 3
+
 
 class MusicBoxTemplate(receipts.Receipt):
     ARTWORK_ID = 'music_box'
@@ -31,13 +34,11 @@ class MusicBoxTemplate(receipts.Receipt):
         self.grid_line_count: int = math.ceil(self.height / GRID_SPACING)
 
     def draw(self):
-        path = Path()
         for i in range(self.whole_strips):
-            self.draw_music_box_strip(path, i)
-        self.add_path(path)
-        self.stroke()
+            self.draw_music_box_strip(i)
 
-    def draw_music_box_strip(self, path: Path, strip_index: int):
+    def draw_music_box_strip(self, strip_index: int):
+        path = Path()
         offset_strip = self.page_margin + strip_index * STRIP_WIDTH
 
         # Draw the outline for the paper strip
@@ -55,3 +56,9 @@ class MusicBoxTemplate(receipts.Receipt):
         for i in range(self.grid_line_count):
             path.line(Vec2(staff_offset, i * GRID_SPACING),
                       Vec2(staff_offset + (NOTE_COUNT - 1) * LINE_SPACING, i * GRID_SPACING))
+        self.add_path(path)
+        self.stroke()
+
+        for i in STAFF_LINE_INDICES:
+            self.rectfill(staff_offset + i * LINE_SPACING - 0.5 * STAFF_LINE_THICKNESS, 0,
+                          STAFF_LINE_THICKNESS, self.height)

@@ -65,10 +65,10 @@ class Receipt:
     def add_lines(self, lines):
         self.postscript_lines.extend(lines)
 
-    def rectstroke(self, x, y, w, h):
+    def rectstroke(self, x: float, y: float, w: float, h: float):
         self.postscript_lines.append(f"{x} {y} {w} {h} rectstroke")
 
-    def rectfill(self, x, y, w, h):
+    def rectfill(self, x: float, y: float, w: float, h: float):
         self.postscript_lines.append(f"{x} {y} {w} {h} rectfill")
 
     def outline_page(self):
