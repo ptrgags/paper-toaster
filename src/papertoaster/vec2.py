@@ -1,22 +1,23 @@
 import math
+from typing import Self
 
 
 class Vec2:
-    def __init__(self, x, y):
+    def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
 
-    def __add__(self, other):
+    def __add__(self, other: Self):
         x = self.x + other.x
         y = self.y + other.y
         return Vec2(x, y)
 
-    def __sub__(self, other):
+    def __sub__(self, other: Self):
         x = self.x - other.x
         y = self.y - other.y
         return Vec2(x, y)
 
-    def __mul__(self, other):
+    def __mul__(self, other: Self):
         x = self.x * other.x
         y = self.y * other.y
         return Vec2(x, y)
@@ -27,7 +28,7 @@ class Vec2:
     def __repr__(self):
         return f'Vec2({self.x, self.y})'
 
-    def __rmul__(self, scalar):
+    def __rmul__(self, scalar: float):
         """
         Scalar multiplication. Scalar goes on the left
         """
@@ -35,7 +36,7 @@ class Vec2:
         y = self.y * scalar
         return Vec2(x, y)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: Self):
         x = self.x / other.x
         y = self.y / other.y
         return Vec2(x, y)
@@ -53,7 +54,7 @@ class Vec2:
         return Vec2(-self.y, self.x)
 
     @classmethod
-    def direction_vec(cls, angle_radians):
+    def direction_vec(cls, angle_radians: float):
         """
         Get a unit vector at the given angle in radians
         """

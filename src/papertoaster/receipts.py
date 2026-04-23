@@ -1,6 +1,8 @@
 import argparse
 import os
 
+from papertoaster.path import Path
+
 
 class Receipt:
     # PostScript uses 72 points per inch
@@ -36,10 +38,10 @@ class Receipt:
         h = self.num_cards * args.page_height * self.PPI
         if args.landscape:
             w, h = h, w
-        self.width = w
-        self.height = h
+        self.width: float = w
+        self.height: float = h
 
-        self.postscript_lines = []
+        self.postscript_lines: list[str] = []
         self.add_preamble()
 
     def add_preamble(self):
@@ -48,7 +50,7 @@ class Receipt:
             f"<< /PageSize [{self.width} {self.height}] >> setpagedevice",
         ])
 
-    def add_path(self, path):
+    def add_path(self, path: Path):
         self.postscript_lines.extend(path.to_postscript())
 
     def stroke(self):
