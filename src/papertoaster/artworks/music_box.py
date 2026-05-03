@@ -8,11 +8,14 @@ from papertoaster.vec2 import Vec2
 PPI = receipts.Receipt.PPI
 POINTS_PER_MM = PPI / 25.4
 
-# Each paper music box strip is 4cm wide
-STRIP_WIDTH = 40 * POINTS_PER_MM
+# Each paper music box strip is 4cm wide. However, when I tried it, the paper
+# was a little too narrow and would slip. So add a bit of padding
+PADDING = 2 * POINTS_PER_MM
+STRIP_WIDTH = 40 * POINTS_PER_MM + PADDING
 
-# There's a margin of 6mm above/below the staff
-STAFF_MARGIN = 6 * POINTS_PER_MM
+# There's a margin of 6mm above/below the staff, plus the extra padding
+# mentioned above
+STAFF_MARGIN = 6 * POINTS_PER_MM + 0.5 * PADDING
 # The 15 lines for notes are spaced 2mm apart
 LINE_SPACING = 2 * POINTS_PER_MM
 # The grid lines for note durations are spaced 4mm apart, twice the staff spacing.
