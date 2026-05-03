@@ -7,12 +7,14 @@ from papertoaster.artworks.grid import Grid
 from papertoaster.artworks.hex_grid import HexGrid
 from papertoaster.artworks.hitomezashi import Hitomezashi
 from papertoaster.artworks.iso_grid import IsoGrid
+from papertoaster.artworks.music_box import MusicBoxTemplate
 from papertoaster.artworks.quiet_dice import QuietDice
 from papertoaster.artworks.robot_walks import RobotWalks
 from papertoaster.artworks.todo import ToDoList
 from papertoaster.artworks.turtle_dance import TurtleDance
+from papertoaster.receipts import Receipt
 
-ARTWORKS = [
+ARTWORKS: list[type[Receipt]] = [
     Barcode128,
     Braids,
     ColoredBraids,
@@ -22,6 +24,7 @@ ARTWORKS = [
     HexGrid,
     Hitomezashi,
     IsoGrid,
+    MusicBoxTemplate,
     QuietDice,
     RobotWalks,
     ToDoList,
