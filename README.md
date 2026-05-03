@@ -178,7 +178,7 @@ C
 
 **Example Output:**
 
-<img width="400px" src="figures/music_box_thumbnail.png" />
+<img width="400px" src="figures/music_box.png" />
 
 #### Color Swatches (2026-01-27)
 
@@ -187,6 +187,8 @@ C
 >```
 >print_swatches --page-width 5 --page-height 7
 >```
+
+<img width="400px" src="figures/print_swatches.png">
 
 #### Robot Walks (2024-06-10)
 
