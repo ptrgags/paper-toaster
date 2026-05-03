@@ -1,6 +1,7 @@
 import argparse
 import os
 
+from papertoaster.vec2 import Vec2
 from papertoaster.path import Path
 
 
@@ -62,7 +63,7 @@ class Receipt:
     def even_odd_fill(self):
         self.postscript_lines.append("eofill")
 
-    def add_lines(self, lines):
+    def add_lines(self, lines: list[str]):
         self.postscript_lines.extend(lines)
 
     def rectstroke(self, x: float, y: float, w: float, h: float):
@@ -83,14 +84,14 @@ class Receipt:
             self.postscript_lines.append(f"  {line}")
         self.postscript_lines.append(f"}} def")
 
-    def set_font(self, font_name, size_points):
+    def set_font(self, font_name: str, size_points: float):
         self.postscript_lines.extend([
             f"/{font_name} findfont",
             f"{size_points} scalefont",
             "setfont"
         ])
 
-    def draw_text(self, position, text):
+    def draw_text(self, position: Vec2, text: str):
         self.postscript_lines.extend([
             f"{position.x} {position.y} moveto",
             f"({text}) show"
@@ -102,7 +103,7 @@ class Receipt:
     def draw(self):
         pass
 
-    def print(self, work_dir, artwork_name):
+    def print(self, work_dir: str, artwork_name: str):
         """
         "print" to a PostScript file,
         and also generate some post-processed versions
