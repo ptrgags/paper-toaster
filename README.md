@@ -135,6 +135,51 @@ DESCRIPTION
 
 -->
 
+
+#### Music Box Template (2026-05-03)
+
+>[!IMPORTANT]
+> This script was designed for a 8.5x11 in (U.S. Letter) sized paper, not
+> a receipt printer. Make sure to include the following global settings:
+>
+> ```
+> music_box --page-width 8.5 --page-height 11
+> ```
+>
+> For best results, print on thick paper like cardstock. Thin paper isn't always strong enough 
+
+A long time ago, I got a 15-note DIY music box like [this one](https://www.amazon.com/Crank-Music-Ideal-Gifts-Lovers/dp/B07P7GD3CP/ref=sr_1_2?crid=10NFPW2IFLT0A&dib=eyJ2IjoiMSJ9.AL1uWYJe44pQnKM61K4K_la8eAPCPK8YNO8UVWBidRzsBvOc1UmD3J0NH9bWZqxfM0qlbfksQTt0F3dI404lixRQsZb7H8nRNPESfVw9P-94o1Z2t73S3duYCgZF8ba-2T53CJrZBfWyLfMKdtYYBYY3kvF5DbVLvs8awFKwrZMlw3_FcupZoej9Avl0s7Jgtk-WbdT9qywOe3xVuxFSUd83NQt20FKcXFkN3jeaugwl31nbQYBQCm7uK0PmtpupXw4qbp3fpqZCmCkIzRrhAEAP-EuDL0kf1HHw1HRbC3s.YKHFNrhFbRIVBX53GShYMCLkc3oN3Xs3H2i7wfzMkkM&dib_tag=se&keywords=diy+music+box&qid=1777819175&sprefix=diy+music+bo%2Caps%2C152&sr=8-2). It uses a paper strip as a punch card to program the notes. The one downside is it only comes with a handful of paper blanks.
+
+This script provides a way to create more paper strips, including the grid of notes. 
+A page of U.S. letter-sized paper fits 5 strips as shown in the example output below.
+
+This template doesn't include the note names, but does highlight the staff lines
+like the original templates did. The notes form two octaves of the C major scale,
+arranged as follows:
+
+
+```
+C
+B
+A
+G
+F=====================================================
+E
+D=====================================================
+C
+B=====================================================
+A
+G=====================================================
+F
+E=====================================================
+D
+C
+```
+
+**Example Output:**
+
+<img width="400px" src="figures/music_box_thumbnail.png" />
+
 #### Color Swatches (2026-01-27)
 
 >[!IMPORTANT]

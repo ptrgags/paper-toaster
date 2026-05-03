@@ -2,6 +2,7 @@ import argparse
 import os
 
 from papertoaster.vec2 import Vec2
+from papertoaster.path import Path
 
 
 class Receipt:
@@ -38,8 +39,8 @@ class Receipt:
         h = self.num_cards * args.page_height * self.PPI
         if args.landscape:
             w, h = h, w
-        self.width = w
-        self.height = h
+        self.width: float = w
+        self.height: float = h
 
         self.postscript_lines: list[str] = []
         self.add_preamble()
@@ -50,7 +51,7 @@ class Receipt:
             f"<< /PageSize [{self.width} {self.height}] >> setpagedevice",
         ])
 
-    def add_path(self, path):
+    def add_path(self, path: Path):
         self.postscript_lines.extend(path.to_postscript())
 
     def stroke(self):
@@ -65,10 +66,10 @@ class Receipt:
     def add_lines(self, lines: list[str]):
         self.postscript_lines.extend(lines)
 
-    def rectstroke(self, x, y, w, h):
+    def rectstroke(self, x: float, y: float, w: float, h: float):
         self.postscript_lines.append(f"{x} {y} {w} {h} rectstroke")
 
-    def rectfill(self, x, y, w, h):
+    def rectfill(self, x: float, y: float, w: float, h: float):
         self.postscript_lines.append(f"{x} {y} {w} {h} rectfill")
 
     def outline_page(self):
